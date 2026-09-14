@@ -48,11 +48,15 @@
   /* 상태 — 테마와 무관하게 유지 */
   --ok: #7fd0a8;
   --ok-soft: #9fe0be;
+  --danger: #c0392b; /* 오류 배경에 옅게 섞는 기준색 */
+  --danger-text: #96271b; /* 옅은 오류 배경 위 본문 — 대비 5.9:1 */
 
   /* 선 · 그림자 */
   --line: rgba(26, 34, 32, 0.16);
   --line-strong: rgba(26, 34, 32, 0.28);
   --white-line: rgba(255, 255, 255, 0.18);
+  --white-fill: rgba(255, 255, 255, 0.04); /* 어두운 표면 위 카드 바닥 */
+  --white-fill-strong: rgba(255, 255, 255, 0.08); /* 같은 카드의 호버 상태 */
   --shadow-sm: 0 2px 10px rgba(9, 12, 11, 0.05);
   --shadow-md: 0 14px 38px rgba(9, 12, 11, 0.1);
   --shadow-lg: 0 30px 70px rgba(9, 12, 11, 0.16);
