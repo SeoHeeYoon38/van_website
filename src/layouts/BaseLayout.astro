@@ -1,5 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions'
+// ADMIN GATE (임시 잠금) — 기능을 걷어낼 때 이 줄과 아래 <AdminGate /> 한 줄만 지우면 된다.
+import AdminGate from '../components/AdminGate.astro'
 import SiteFooter from '../components/SiteFooter.astro'
 import SiteHeader from '../components/SiteHeader.astro'
 import { basePath, content, routePath } from '../data/site.js'
@@ -200,6 +202,8 @@ if (pageKey === 'home') {
     </script>
   </head>
   <body>
+    {/* ADMIN GATE (임시 잠금) — 제거 시 이 한 줄과 위쪽 import 를 지우고 components/AdminGate.astro 를 삭제한다. */}
+    <AdminGate lang={lang} />
     <div class="scroll-progress" data-scroll-progress role="progressbar" aria-label={copy.common.readingProgress} aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
     <SiteHeader lang={lang} currentKey={pageKey} currentSlug={slug} />
     <main id="main-content">
