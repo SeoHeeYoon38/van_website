@@ -651,32 +651,34 @@ body::after {
   padding: 24px;
   border: 1px solid var(--white-line);
   border-radius: var(--radius);
-  background: color-mix(in srgb, #fff 4%, transparent);
+  background: var(--white-fill);
   transition: border-color 440ms var(--ease-out), background 440ms var(--ease-out), transform 440ms var(--ease-out);
 }
 
-.domain-card:hover {
-  border-color: tint(accent-soft, 48);
-  background: color-mix(in srgb, #fff 8%, transparent);
-  transform: translateY(-5px);
+.domain-card {
+  &:hover {
+    border-color: tint(accent-soft, 48);
+    background: var(--white-fill-strong);
+    transform: translateY(-5px);
+  }
+  &__head { display: flex; align-items: baseline; gap: 9px; margin: 0 0 14px; }
+  &__index {
+    color: var(--accent-soft); font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: .1em;
+  }
+  &__head strong {
+    color: #fff; font-family: var(--display); font-size: 16px; font-weight: 600; letter-spacing: .01em;
+  }
+  &__head em { color: var(--on-dark-muted); font-size: 12.5px; font-style: normal; }
+  & ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  & li {
+    position: relative;
+    padding-left: 15px;
+    color: var(--on-dark-soft);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  & li::before { position: absolute; left: 0; color: var(--accent); content: '·'; font-weight: 700; }
 }
-
-.domain-card__head { display: flex; align-items: baseline; gap: 9px; margin: 0 0 14px; }
-.domain-card__index { color: var(--accent-soft); font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: .1em; }
-.domain-card__head strong { color: #fff; font-family: var(--display); font-size: 16px; font-weight: 600; letter-spacing: .01em; }
-.domain-card__head em { color: var(--on-dark-muted); font-size: 12.5px; font-style: normal; }
-
-.domain-card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
-
-.domain-card li {
-  position: relative;
-  padding-left: 15px;
-  color: var(--on-dark-soft);
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-.domain-card li::before { position: absolute; left: 0; color: var(--accent); content: '·'; font-weight: 700; }
 
 @include upto($bp-mobile) {
   .domain-grid { grid-template-columns: 1fr; margin-top: 40px; }
@@ -730,38 +732,39 @@ body::after {
   transition: transform 460ms var(--ease-out), box-shadow 460ms var(--ease-out), border-color 460ms var(--ease-out);
 }
 
-.dept-card:hover {
-  border-color: tint(accent, 50);
-  box-shadow: var(--shadow-md);
-  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-5px);
+.dept-card {
+  &:hover {
+    border-color: tint(accent, 50);
+    box-shadow: var(--shadow-md);
+    transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-5px);
+  }
+  &__index {
+    color: var(--accent-deep);
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: .04em;
+  }
+  & h3 {
+    margin: 0 0 10px; color: var(--text-strong); font-family: var(--kr-display); font-size: 19px; font-weight: 700;
+  }
+  &__summary { margin: 0 0 12px; color: var(--text-soft); font-size: 15.5px; line-height: 1.8; }
+  &__fit {
+    margin: 0;
+    padding-left: 14px;
+    border-left: 2px solid tint(accent, 45);
+    color: var(--text-muted);
+    font-size: 14.5px;
+    line-height: 1.75;
+  }
+  &__fit strong {
+    display: block; color: var(--accent-deep); font-size: 12.5px; font-weight: 700; letter-spacing: .04em;
+  }
+  &__meta { margin: 0; display: grid; gap: 10px; }
+  &__meta > div { display: grid; gap: 2px; }
+  &__meta dt { color: var(--text-muted); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; }
+  &__meta dd { margin: 0; color: var(--text-strong); font-size: 14.5px; font-weight: 500; }
 }
-
-.dept-card__index {
-  color: var(--accent-deep);
-  font-family: var(--display);
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: .04em;
-}
-
-.dept-card h3 { margin: 0 0 10px; color: var(--text-strong); font-family: var(--kr-display); font-size: 19px; font-weight: 700; }
-.dept-card__summary { margin: 0 0 12px; color: var(--text-soft); font-size: 15.5px; line-height: 1.8; }
-
-.dept-card__fit {
-  margin: 0;
-  padding-left: 14px;
-  border-left: 2px solid tint(accent, 45);
-  color: var(--text-muted);
-  font-size: 14.5px;
-  line-height: 1.75;
-}
-
-.dept-card__fit strong { display: block; color: var(--accent-deep); font-size: 12.5px; font-weight: 700; letter-spacing: .04em; }
-
-.dept-card__meta { margin: 0; display: grid; gap: 10px; }
-.dept-card__meta > div { display: grid; gap: 2px; }
-.dept-card__meta dt { color: var(--text-muted); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; }
-.dept-card__meta dd { margin: 0; color: var(--text-strong); font-size: 14.5px; font-weight: 500; }
 
 .terms-block {
   margin-top: 30px;
@@ -771,18 +774,20 @@ body::after {
   background: tint(paper-strong, 70);
 }
 
-.terms-block h3 { margin: 0 0 14px; color: var(--text-strong); font-family: var(--kr-display); font-size: 17px; font-weight: 700; }
-.terms-block ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; }
-
-.terms-block li {
-  position: relative;
-  padding-left: 18px;
-  color: var(--text-soft);
-  font-size: 15px;
-  line-height: 1.75;
+.terms-block {
+  & h3 {
+    margin: 0 0 14px; color: var(--text-strong); font-family: var(--kr-display); font-size: 17px; font-weight: 700;
+  }
+  & ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+  & li {
+    position: relative;
+    padding-left: 18px;
+    color: var(--text-soft);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  & li::before { position: absolute; left: 0; color: var(--accent); content: '—'; }
 }
-
-.terms-block li::before { position: absolute; left: 0; color: var(--accent); content: '—'; }
 
 /* 링커리어 모집 공고 링크. 주소를 그대로 노출해 누를 수 있는 링크임을 분명히 한다. */
 .posting-block { margin-top: 30px; }
@@ -808,40 +813,28 @@ body::after {
   transition: border-color 420ms var(--ease-out), background-color 420ms var(--ease-out), transform 420ms var(--ease-out);
 }
 
-.posting-card:hover {
-  border-color: var(--accent);
-  background: tint(accent, 15);
-  transform: translateY(-2px);
+.posting-card {
+  &:hover { border-color: var(--accent); background: tint(accent, 15); transform: translateY(-2px); }
+  &__text { display: grid; gap: 5px; min-width: 0; }
+  &__text strong { font-family: var(--kr-display); font-size: 16px; font-weight: 700; letter-spacing: .01em; }
+  &__url {
+    overflow-wrap: anywhere;
+    color: var(--accent-deep);
+    font-family: var(--display);
+    font-size: 13px;
+    letter-spacing: .02em;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  &__arrow {
+    flex: 0 0 auto;
+    color: var(--accent);
+    font-size: 18px;
+    transition: transform 420ms var(--ease-out);
+  }
+  &:hover .posting-card__arrow { transform: translateX(6px); }
 }
-
-.posting-card__text { display: grid; gap: 5px; min-width: 0; }
-
-.posting-card__text strong {
-  font-family: var(--kr-display);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: .01em;
-}
-
-.posting-card__url {
-  overflow-wrap: anywhere;
-  color: var(--accent-deep);
-  font-family: var(--display);
-  font-size: 13px;
-  letter-spacing: .02em;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-}
-
-.posting-card__arrow {
-  flex: 0 0 auto;
-  color: var(--accent);
-  font-size: 18px;
-  transition: transform 420ms var(--ease-out);
-}
-
-.posting-card:hover .posting-card__arrow { transform: translateX(6px); }
 
 /* 후원 방식 3분류 — 북 펀딩 / 개인 후원 / 기업·단체 후원 */
 .way-list {
@@ -862,83 +855,63 @@ body::after {
   transition: border-color 480ms var(--ease-out), transform 480ms var(--ease-out), box-shadow 480ms var(--ease-out);
 }
 
-.way-card:hover {
-  border-color: tint(accent, 62);
-  box-shadow: 0 18px 40px -28px tint(shade-800, 45);
+.way-card {
+  &:hover { border-color: tint(accent, 62); box-shadow: 0 18px 40px -28px tint(shade-800, 45); }
+  &__head { display: flex; align-items: center; gap: 12px; }
+  &__index {
+    color: var(--accent);
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .1em;
+  }
+  &__tag {
+    color: var(--text-muted);
+    font-family: var(--display);
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  & h3 {
+    margin: 0;
+    color: var(--text-strong);
+    font-family: var(--kr-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+  }
+  &__body { margin: 0; color: var(--text-soft); font-size: 15px; line-height: 1.78; }
+  &__tiers { display: flex; flex-wrap: wrap; gap: 8px; margin: 3px 0 0; padding: 0; list-style: none; }
+  &__tiers li {
+    padding: 7px 13px;
+    border: 1px solid tint(accent, 40);
+    border-radius: 999px;
+    background: tint(accent, 9);
+    color: var(--accent-deep);
+    font-family: var(--kr-display);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  &__points { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  &__points li {
+    position: relative;
+    padding-left: 16px;
+    color: var(--text-soft);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  &__points li::before { position: absolute; left: 0; color: var(--accent); content: '—'; }
+  &__note {
+    margin: auto 0 0;
+    padding-top: 13px;
+    border-top: 1px solid tint(accent, 22);
+    color: var(--text-soft);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  & .inline-link { margin-top: 4px; align-self: flex-start; font-size: 13px; }
 }
-
-.way-card__head { display: flex; align-items: center; gap: 12px; }
-
-.way-card__index {
-  color: var(--accent);
-  font-family: var(--display);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: .1em;
-}
-
-.way-card__tag {
-  color: var(--text-muted);
-  font-family: var(--display);
-  font-size: 10px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-}
-
-.way-card h3 {
-  margin: 0;
-  color: var(--text-strong);
-  font-family: var(--kr-display);
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -.01em;
-}
-
-.way-card__body { margin: 0; color: var(--text-soft); font-size: 15px; line-height: 1.78; }
-
-.way-card__tiers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 3px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.way-card__tiers li {
-  padding: 7px 13px;
-  border: 1px solid tint(accent, 40);
-  border-radius: 999px;
-  background: tint(accent, 9);
-  color: var(--accent-deep);
-  font-family: var(--kr-display);
-  font-size: 13px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.way-card__points { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
-
-.way-card__points li {
-  position: relative;
-  padding-left: 16px;
-  color: var(--text-soft);
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-.way-card__points li::before { position: absolute; left: 0; color: var(--accent); content: '—'; }
-
-.way-card__note {
-  margin: auto 0 0;
-  padding-top: 13px;
-  border-top: 1px solid tint(accent, 22);
-  color: var(--text-soft);
-  font-size: 13px;
-  line-height: 1.7;
-}
-
-.way-card .inline-link { margin-top: 4px; align-self: flex-start; font-size: 13px; }
 
 .way-contact {
   display: grid;
@@ -950,149 +923,119 @@ body::after {
   background: tint(accent, 7);
 }
 
-.way-contact__head h3 {
-  margin: 0 0 7px;
-  color: var(--text-strong);
-  font-family: var(--kr-display);
-  font-size: 18px;
-  font-weight: 700;
+.way-contact {
+  &__head h3 {
+    margin: 0 0 7px;
+    color: var(--text-strong);
+    font-family: var(--kr-display);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  &__head p { margin: 0; color: var(--text-soft); font-size: 14.5px; line-height: 1.72; }
+  &__manager {
+    margin: 0 0 8px;
+    color: var(--accent-deep);
+    font-family: var(--kr-display);
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: .01em;
+  }
+  &__actions { display: flex; flex-wrap: wrap; gap: 10px; }
 }
-
-.way-contact__head p { margin: 0; color: var(--text-soft); font-size: 14.5px; line-height: 1.72; }
-
-/* 담당자는 블록 맨 위에 둔다. 누구에게 연락하는지가 먼저 보여야 한다. */
-.way-contact__manager {
-  margin: 0 0 8px;
-  color: var(--accent-deep);
-  font-family: var(--kr-display);
-  font-size: 13.5px;
-  font-weight: 700;
-  letter-spacing: .01em;
-}
-
-.way-contact__actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
 /* 카드 안의 외부 참여 링크 (텀블벅 등) */
-.way-card__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  align-self: flex-start;
-  margin-top: 4px;
-  padding: 11px 18px;
-  border-radius: 999px;
-  background: var(--accent-deep);
-  color: #fff;
-  font-family: var(--kr-display);
-  font-size: 13.5px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: background-color 380ms var(--ease-out), transform 380ms var(--ease-out);
+.way-card {
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 11px 18px;
+    border-radius: 999px;
+    background: var(--accent-deep);
+    color: #fff;
+    font-family: var(--kr-display);
+    font-size: 13.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 380ms var(--ease-out), transform 380ms var(--ease-out);
+  }
+  &__cta:hover { background: var(--shade-800); transform: translateY(-2px); }
+  &__cta span { transition: transform 380ms var(--ease-out); }
+  &__cta:hover span { transform: translateX(4px); }
 }
-
-.way-card__cta:hover { background: var(--shade-800); transform: translateY(-2px); }
-.way-card__cta span { transition: transform 380ms var(--ease-out); }
-.way-card__cta:hover span { transform: translateX(4px); }
 
 /* 정기 후원 신청 폼 */
 .donor-form { max-width: 780px; margin-top: 34px; }
 
-.donor-form__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.donor-form__wide, .donor-form__custom { grid-column: 1 / -1; }
-.donor-form label { display: grid; gap: 8px; }
-
-/* display 를 지정하면 UA 스타일의 [hidden] { display: none } 이 무력화된다.
-   '직접 입력' 금액칸이 항상 보이던 원인이므로 명시적으로 다시 숨긴다. */
-.donor-form label[hidden] { display: none; }
-
-.donor-form label > span {
-  color: var(--text-strong);
-  font-family: var(--kr-display);
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.donor-form label > span i {
-  margin-left: 5px;
-  color: var(--accent-deep);
-  font-size: 11.5px;
-  font-style: normal;
-  font-weight: 600;
-}
-
-.donor-form input, .donor-form select, .donor-form textarea {
-  width: 100%;
-  padding: 13px 15px;
-  border: 1px solid tint(text-strong, 20);
-  border-radius: var(--radius);
-  background: var(--paper-strong);
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: 15.5px;
-  transition: border-color 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
-}
-
-.donor-form textarea { resize: vertical; line-height: 1.7; }
-
-.donor-form input:focus, .donor-form select:focus, .donor-form textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px tint(accent, 18);
-  outline: none;
-}
-
-.donor-form__consent {
-  display: grid;
-  grid-template-columns: 20px minmax(0, 1fr);
-  gap: 11px;
-  align-items: start;
-  margin-top: 22px;
-}
-
-.donor-form__consent input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--accent); }
-
-.donor-form__consent > span {
-  color: var(--text-soft);
-  font-family: var(--sans);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.7;
-}
-
-.donor-form__actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 26px; }
-.donor-form__actions .button-link { color: var(--accent-deep); border-color: tint(accent, 50); cursor: pointer; }
-.donor-form__actions .button-link:hover { color: var(--shade-900); }
-
-.donor-form__hint { margin: 18px 0 0; color: var(--text-muted); font-size: 13.5px; line-height: 1.72; }
-
-.donor-form__error {
-  margin: 14px 0 0;
-  padding: 12px 16px;
-  border-radius: var(--radius);
-  background: color-mix(in srgb, #c0392b 12%, transparent);
-  color: #96271b;
-  font-size: 14px;
-  font-weight: 600;
+.donor-form {
+  &__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  &__wide, &__custom { grid-column: 1 / -1; }
+  & label { display: grid; gap: 8px; }
+  & label[hidden] { display: none; }
+  & label > span {
+    color: var(--text-strong);
+    font-family: var(--kr-display);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  & label > span i {
+    margin-left: 5px;
+    color: var(--accent-deep);
+    font-size: 11.5px;
+    font-style: normal;
+    font-weight: 600;
+  }
+  & input, & select, & textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid tint(text-strong, 20);
+    border-radius: var(--radius);
+    background: var(--paper-strong);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15.5px;
+    transition: border-color 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
+  }
+  & textarea { resize: vertical; line-height: 1.7; }
+  & input:focus, & select:focus, & textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px tint(accent, 18); outline: none; }
+  &__consent {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    gap: 11px;
+    align-items: start;
+    margin-top: 22px;
+  }
+  &__consent input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--accent); }
+  &__consent > span {
+    color: var(--text-soft);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+  &__actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 26px; }
+  &__actions .button-link { color: var(--accent-deep); border-color: tint(accent, 50); cursor: pointer; }
+  &__actions .button-link:hover { color: var(--shade-900); }
+  &__hint { margin: 18px 0 0; color: var(--text-muted); font-size: 13.5px; line-height: 1.72; }
+  &__error {
+    margin: 14px 0 0;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    background: tint(danger, 12);
+    color: var(--danger-text);
+    font-size: 14px;
+    font-weight: 600;
+  }
 }
 
 /* .button-link 은 어두운 섹션 기준(흰 글씨·흰 테두리)이라 밝은 배경에서 흐려진다.
    후원 창구는 밝은 배경 위에 놓이므로 대비를 다시 잡는다. */
-.way-contact .button-link {
-  border-color: tint(accent, 50);
-  color: var(--accent-deep);
-}
-
-/* 호버 시에는 밝은 그라디언트가 채워지므로 기본 규칙과 같은 어두운 글씨로 둔다. */
-.way-contact .button-link:hover { color: var(--shade-900); }
-
-.way-contact__manager {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 13px;
+.way-contact {
+  & .button-link { border-color: tint(accent, 50); color: var(--accent-deep); }
+  & .button-link:hover { color: var(--shade-900); }
+  &__manager { margin: 0; color: var(--text-muted); font-size: 13px; }
 }
 
 @include upto($bp-tablet) {

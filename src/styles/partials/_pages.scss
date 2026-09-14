@@ -179,27 +179,24 @@
   background: tint(accent, 8);
 }
 
-.archive-cta .button { color: var(--accent-deep); border-color: tint(accent, 52); }
-.archive-cta .button:hover { color: var(--shade-900); }
-.archive-cta p { margin: 16px 0 0; color: var(--text-soft); font-size: 14px; line-height: 1.78; }
+.archive-cta {
+  & .button { color: var(--accent-deep); border-color: tint(accent, 52); }
+  & .button:hover { color: var(--shade-900); }
+  & p { margin: 16px 0 0; color: var(--text-soft); font-size: 14px; line-height: 1.78; }
+}
 
 /* 비율이 다른 시안 이미지는 자르지 않고 설명과 함께 쌓는다. */
 .archive-figures { display: grid; gap: 30px; margin-top: 48px; }
-.archive-figures figure { margin: 0; }
-
-.archive-figures img {
-  display: block;
-  width: 100%;
-  border: 1px solid tint(text-strong, 10);
-  border-radius: var(--radius);
-  background: var(--paper-tint);
-}
-
-.archive-figures figcaption {
-  margin-top: 12px;
-  color: var(--text-muted);
-  font-size: 13.5px;
-  text-align: center;
+.archive-figures {
+  & figure { margin: 0; }
+  & img {
+    display: block;
+    width: 100%;
+    border: 1px solid tint(text-strong, 10);
+    border-radius: var(--radius);
+    background: var(--paper-tint);
+  }
+  & figcaption { margin-top: 12px; color: var(--text-muted); font-size: 13.5px; text-align: center; }
 }
 
 /* 도서 사양 */
@@ -212,46 +209,44 @@
   font-weight: 700;
 }
 
-.archive-spec dl { display: grid; gap: 0; margin: 0; }
-
-.archive-spec dl > div {
-  display: grid;
-  grid-template-columns: 110px minmax(0, 1fr);
-  gap: 16px;
-  padding: 14px 0;
-  border-top: 1px solid tint(text-strong, 12);
+.archive-spec {
+  & dl { display: grid; gap: 0; margin: 0; }
+  & dl > div {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 16px;
+    padding: 14px 0;
+    border-top: 1px solid tint(text-strong, 12);
+  }
+  & dl > div:last-child { border-bottom: 1px solid tint(text-strong, 12); }
+  & dt { margin: 0; color: var(--text-muted); font-size: 14px; font-weight: 600; }
+  & dd { margin: 0; color: var(--text); font-size: 15.5px; line-height: 1.7; }
 }
-
-.archive-spec dl > div:last-child { border-bottom: 1px solid tint(text-strong, 12); }
-.archive-spec dt { margin: 0; color: var(--text-muted); font-size: 14px; font-weight: 600; }
-.archive-spec dd { margin: 0; color: var(--text); font-size: 15.5px; line-height: 1.7; }
 
 /* 목차 */
 .archive-contents { max-width: 68ch; margin: 52px auto 0; }
-.archive-contents__note { margin: 0 0 22px; color: var(--text-muted); font-size: 13.5px; line-height: 1.7; }
-.archive-contents__parts { display: grid; gap: 26px; }
-
-.archive-contents__parts h3 {
-  margin: 0 0 11px;
-  color: var(--accent-deep);
-  font-family: var(--kr-display);
-  font-size: 15.5px;
-  font-weight: 700;
-  letter-spacing: .01em;
+.archive-contents {
+  &__note { margin: 0 0 22px; color: var(--text-muted); font-size: 13.5px; line-height: 1.7; }
+  &__parts { display: grid; gap: 26px; }
+  &__parts h3 {
+    margin: 0 0 11px;
+    color: var(--accent-deep);
+    font-family: var(--kr-display);
+    font-size: 15.5px;
+    font-weight: 700;
+    letter-spacing: .01em;
+  }
+  &__parts ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  &__parts li {
+    position: relative;
+    padding-left: 17px;
+    color: var(--text-soft);
+    font-size: 15.5px;
+    line-height: 1.72;
+    word-break: keep-all;
+  }
+  &__parts li::before { position: absolute; left: 0; color: var(--accent); content: '—'; }
 }
-
-.archive-contents__parts ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
-
-.archive-contents__parts li {
-  position: relative;
-  padding-left: 17px;
-  color: var(--text-soft);
-  font-size: 15.5px;
-  line-height: 1.72;
-  word-break: keep-all;
-}
-
-.archive-contents__parts li::before { position: absolute; left: 0; color: var(--accent); content: '—'; }
 
 .archive-article-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 48px; }
 .archive-article-gallery img { width: 100%; height: 260px; border-radius: var(--radius); object-fit: cover; transition: transform 800ms var(--ease-out); }
