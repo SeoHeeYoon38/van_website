@@ -1,6 +1,8 @@
 // 섹션 공통 · 본문 타이포그래피
 // global.css 에서 분리했습니다. 선언 내용은 그대로이며 순서도 보존합니다.
 
+@use 'config' as *;
+
 /* 6. 섹션 공통 · 본문 타이포그래피 -------------------------------------- */
 
 .home-section { padding: 128px 0; scroll-margin-top: 68px; }
@@ -93,13 +95,13 @@ html[lang='ko'] .philosophy-section p:last-child {
   font-size: clamp(70px, 8vw, 120px);
   font-weight: 700;
   line-height: 1;
-  -webkit-text-stroke: 1px color-mix(in srgb, var(--accent) 20%, transparent);
+  -webkit-text-stroke: 1px tint(accent, 20);
   pointer-events: none;
   user-select: none;
 }
 
 .section-intro--light::before {
-  -webkit-text-stroke-color: color-mix(in srgb, var(--accent-soft) 18%, transparent);
+  -webkit-text-stroke-color: tint(accent-soft, 18);
 }
 
 
@@ -180,7 +182,7 @@ html[lang='ko'] .philosophy-section p:last-child {
   width: 84px;
   height: 3px;
   border-radius: 3px;
-  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 0%, transparent));
+  background: linear-gradient(90deg, var(--accent), tint(accent, 0));
   content: '';
   transform-origin: left;
   transition: transform 900ms var(--ease-out) 320ms;

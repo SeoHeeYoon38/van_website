@@ -1,6 +1,8 @@
 // 아카이브 · 서브 페이지(후원 · 26-2 지원)
 // global.css 에서 분리했습니다. 선언 내용은 그대로이며 순서도 보존합니다.
 
+@use 'config' as *;
+
 /* 8. 아카이브 ----------------------------------------------------------- */
 
 .archive-hero {
@@ -14,7 +16,7 @@
 .archive-hero::before {
   position: absolute;
   inset: -30%;
-  background: radial-gradient(32% 28% at 20% 70%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%);
+  background: radial-gradient(32% 28% at 20% 70%, tint(accent, 16), transparent 70%);
   content: '';
   animation: van-aurora 24s var(--ease-soft) infinite;
 }
@@ -40,7 +42,7 @@
 }
 
 .archive-toolbar input::placeholder { color: var(--text-muted); }
-.archive-toolbar input:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent); }
+.archive-toolbar input:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 4px tint(accent, 18); }
 
 .archive-filters { display: flex; flex-wrap: wrap; gap: 8px; }
 
@@ -91,7 +93,7 @@
 }
 
 .archive-list article:hover {
-  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  border-color: tint(accent, 50);
   background: var(--paper-strong);
   box-shadow: var(--shadow-md);
   transform: translateY(-6px);
@@ -172,12 +174,12 @@
   max-width: 68ch;
   margin: 8px auto 0;
   padding: 26px 28px;
-  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border: 1px solid tint(accent, 40);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  background: tint(accent, 8);
 }
 
-.archive-cta .button { color: var(--accent-deep); border-color: color-mix(in srgb, var(--accent) 52%, transparent); }
+.archive-cta .button { color: var(--accent-deep); border-color: tint(accent, 52); }
 .archive-cta .button:hover { color: var(--shade-900); }
 .archive-cta p { margin: 16px 0 0; color: var(--text-soft); font-size: 14px; line-height: 1.78; }
 
@@ -188,7 +190,7 @@
 .archive-figures img {
   display: block;
   width: 100%;
-  border: 1px solid color-mix(in srgb, var(--text-strong) 10%, transparent);
+  border: 1px solid tint(text-strong, 10);
   border-radius: var(--radius);
   background: var(--paper-tint);
 }
@@ -217,10 +219,10 @@
   grid-template-columns: 110px minmax(0, 1fr);
   gap: 16px;
   padding: 14px 0;
-  border-top: 1px solid color-mix(in srgb, var(--text-strong) 12%, transparent);
+  border-top: 1px solid tint(text-strong, 12);
 }
 
-.archive-spec dl > div:last-child { border-bottom: 1px solid color-mix(in srgb, var(--text-strong) 12%, transparent); }
+.archive-spec dl > div:last-child { border-bottom: 1px solid tint(text-strong, 12); }
 .archive-spec dt { margin: 0; color: var(--text-muted); font-size: 14px; font-weight: 600; }
 .archive-spec dd { margin: 0; color: var(--text); font-size: 15.5px; line-height: 1.7; }
 
@@ -303,7 +305,7 @@
 .page-hero__aurora {
   position: absolute;
   inset: -30%;
-  background: radial-gradient(32% 28% at 22% 74%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%);
+  background: radial-gradient(32% 28% at 22% 74%, tint(accent, 18), transparent 70%);
   animation: van-aurora 24s var(--ease-soft) infinite;
   pointer-events: none;
 }
@@ -334,7 +336,7 @@
 .page-hero__rule i {
   width: 96px;
   height: 1px;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--accent-soft) 90%, transparent), transparent);
+  background: linear-gradient(90deg, tint(accent-soft, 90), transparent);
   animation: van-rule-draw 900ms var(--ease-out) 420ms both;
   transform-origin: left;
 }
@@ -359,14 +361,14 @@
   right: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 0%, transparent));
+  background: linear-gradient(90deg, var(--accent), tint(accent, 0));
   content: '';
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 520ms var(--ease-out);
 }
 
-.info-card:hover { border-color: color-mix(in srgb, var(--accent) 50%, transparent); box-shadow: var(--shadow-md); transform: translateY(-6px); }
+.info-card:hover { border-color: tint(accent, 50); box-shadow: var(--shadow-md); transform: translateY(-6px); }
 .info-card:hover::before { transform: scaleX(1); }
 
 .info-card__index { display: block; color: var(--accent-deep); font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: .12em; }
@@ -412,7 +414,7 @@
   transition: transform 420ms var(--ease-out), border-color 420ms var(--ease-out), box-shadow 420ms var(--ease-out);
 }
 
-.step-list li:hover { border-color: color-mix(in srgb, var(--accent) 50%, transparent); box-shadow: var(--shadow-sm); transform: translateY(-4px); }
+.step-list li:hover { border-color: tint(accent, 50); box-shadow: var(--shadow-sm); transform: translateY(-4px); }
 .step-list span { color: var(--accent-deep); font-family: var(--display); font-size: 18px; font-weight: 700; }
 
 /* 미확정 정보 안내 */
@@ -421,7 +423,7 @@
   max-width: 72ch;
   margin: 0;
   padding: 28px 32px 28px 36px;
-  border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+  border: 1px solid tint(accent, 42);
   border-radius: var(--radius);
   color: var(--text);
   background: rgba(255, 253, 248, .74);
@@ -448,7 +450,7 @@
   padding: 62px 56px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: linear-gradient(150deg, var(--paper-strong), color-mix(in srgb, var(--paper-warm) 72%, transparent));
+  background: linear-gradient(150deg, var(--paper-strong), tint(paper-warm, 72));
   box-shadow: var(--shadow-sm);
   text-align: center;
 }
@@ -456,7 +458,7 @@
 .apply-cta::before {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle 340px at var(--pointer-x, 50%) var(--pointer-y, 50%), color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%);
+  background: radial-gradient(circle 340px at var(--pointer-x, 50%) var(--pointer-y, 50%), tint(accent, 18), transparent 70%);
   content: '';
   opacity: 0;
   pointer-events: none;
@@ -538,5 +540,5 @@
 
 .cta-link:hover { box-shadow: var(--shadow-accent); color: var(--shade-900); }
 .cta-link:hover::before { transform: none; }
-.cta-link[aria-current='page'] { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent); }
+.cta-link[aria-current='page'] { box-shadow: 0 0 0 2px tint(accent, 45); }
 .is-condensed .cta-link { height: 34px; }
