@@ -15,6 +15,7 @@ name: Deploy to Vercel
 #   1) VERCEL_TOKEN + VERCEL_ORG_ID + VERCEL_PROJECT_ID  (값 3개)
 #      Git 연동이 없는 프로젝트에도 배포되므로 이 구성에서는 이 방식을 씁니다.
 #      토큰: Vercel → Account Settings → Tokens
+#            프로젝트 전용 토큰(vcp_...)도 동작합니다.
 #      ID  : 프로젝트 → Settings → General 하단, 또는 로컬에서
 #            `npx vercel link` 실행 후 생성되는 .vercel/project.json
 #
@@ -110,8 +111,16 @@ jobs:
             exit 1
           fi
           npm install --global vercel@latest
-          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
-          vercel build --prod --token="$VERCEL_TOKEN"
-          url=$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN")
+
+          # 프로젝트 전용 토큰(vcp_...)은 팀·사용자 정보를 읽을 수 없어
+          # `vercel pull` 이 "Could not retrieve Project Settings" 로 실패한다.
+          # 링크 파일을 직접 써서 pull 단계를 건너뛴다.
+          mkdir -p .vercel
+          printf '{"projectId":"%s","orgId":"%s"}\n' \
+            "$VERCEL_PROJECT_ID" "$VERCEL_ORG_ID" > .vercel/project.json
+
+          # 빌드는 Vercel 쪽에서 수행한다. 프로젝트에 저장된 설정
+          # (framework astro · npm run build · dist · Node 24.x)을 그대로 쓴다.
+          url=$(vercel deploy --prod --yes --token="$VERCEL_TOKEN")
           echo "배포 URL: $url"
           echo "::notice title=배포 완료::$url"
