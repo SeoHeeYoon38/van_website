@@ -1,0 +1,254 @@
+// 히어로
+// global.css 에서 분리했습니다. 선언 내용은 그대로이며 순서도 보존합니다.
+
+/* 5. 히어로 -------------------------------------------------------------- */
+
+.official-hero {
+  position: relative;
+  display: grid;
+  min-height: calc(100svh - var(--header-h));
+  overflow: hidden;
+  place-items: center;
+  color: var(--paper);
+  background-color: var(--shade-900);
+}
+
+/* 패럴랙스(이동)와 켄번즈(확대)를 서로 다른 레이어에 두어 transform 충돌을 피한다. */
+.official-hero__media {
+  position: absolute;
+  inset: -8% -2%;
+  transform: translate3d(0, var(--parallax-shift, 0), 0);
+  will-change: transform;
+}
+
+/*
+  히어로 사진은 원래 남색 톤이라 팔레트를 바꿔도 그대로 남는다.
+  그라데이션을 위 레이어로 깔고 background-blend-mode: color 로 합성하면
+  색조·채도는 그라데이션에서, 명암은 사진에서 가져와 듀오톤이 된다.
+  filter: grayscale 을 쓰면 블렌딩 이후에 적용돼 색이 다시 죽으므로 쓰지 않는다.
+*/
+.official-hero__media::before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(158deg, var(--shade-700), var(--shade-800) 46%, var(--shade-950)),
+    var(--hero-image);
+  background-blend-mode: color;
+  background-position: center, center;
+  background-size: cover, cover;
+  content: '';
+  animation: van-hero-zoom 26s var(--ease-soft) infinite alternate;
+}
+
+.official-hero__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--shade-600) 50%, transparent), transparent 58%),
+    linear-gradient(180deg, color-mix(in srgb, var(--shade-950) 62%, transparent) 0%, color-mix(in srgb, var(--shade-950) 72%, transparent) 45%, color-mix(in srgb, var(--shade-950) 94%, transparent) 100%);
+}
+
+.official-hero__veil::after {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 52px 52px;
+  content: '';
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .85), transparent 78%);
+}
+
+.official-hero__aurora {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(38% 32% at 22% 26%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 70%),
+    radial-gradient(42% 36% at 78% 68%, color-mix(in srgb, var(--shade-600) 28%, transparent), transparent 72%);
+  filter: blur(14px);
+  animation: van-aurora 22s var(--ease-soft) infinite;
+  pointer-events: none;
+}
+
+/* 얇은 하단 기준선만 남긴다. 사방 프레임과 코너 브래킷은 원본 인상이 강해 뺐다. */
+.official-hero__frame {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 55%, transparent), transparent 70%);
+  animation: van-enter 1400ms var(--ease-out) 500ms both;
+  pointer-events: none;
+}
+
+
+
+/*
+  원본 히어로는 로고·표제·문구가 모두 중앙 대칭이었다. 그 구성이 가장 강한
+  정체성이라 좌측 정렬 비대칭 2단으로 바꿨다. 표제는 왼쪽, 메타 정보는
+  오른쪽 아래에 붙는다.
+*/
+.official-hero__content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+  gap: 20px 56px;
+  align-items: end;
+  padding-block: 132px 84px;
+  text-align: left;
+}
+
+.official-hero__lede { grid-column: 1; }
+.official-hero__meta { grid-column: 2; padding-bottom: 6px; }
+
+.official-hero__content > * { animation: van-enter 1000ms var(--ease-out) both; }
+
+.official-hero__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 22px;
+  padding: 6px 13px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 999px;
+  color: var(--accent-soft);
+  font-family: var(--display);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  animation-delay: 180ms;
+}
+
+.official-hero__logo {
+  width: min(190px, 44vw);
+  height: auto;
+  margin-bottom: 30px;
+  animation-delay: 60ms;
+  filter: drop-shadow(0 10px 26px rgba(0, 0, 0, .38));
+}
+
+.official-hero__rule {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 30px 0 22px;
+  color: var(--accent-soft);
+  font-size: 8px;
+  animation-delay: 420ms;
+}
+
+.official-hero__rule i {
+  width: 82px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent-soft) 90%, transparent));
+  animation: van-rule-draw 900ms var(--ease-out) 620ms both;
+  transform-origin: right;
+}
+
+.official-hero__rule i:last-child {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent-soft) 90%, transparent), transparent);
+  transform-origin: left;
+}
+
+/*
+  히어로 제목에는 그라데이션 텍스트(background-clip: text)를 쓰지 않는다.
+  제목을 단어 단위로 쪼개면 자식 .split-word가 overflow: hidden으로
+  클리핑 문맥을 만드는데, 그러면 각 자식이 부모의 text-clip 배경을
+  자기 원점에서 다시 샘플링해 글자가 겹쳐 그려진다. 레이아웃은 정상이고
+  페인트만 깨지므로 발견이 늦다. 단어 등장 연출을 택하고 단색 + 글로우로 간다.
+*/
+.official-hero h1 {
+  margin: 0;
+  color: var(--paper-strong);
+  font-family: var(--display);
+  font-size: clamp(30px, 4.2vw, 54px);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  line-height: 1.04;
+  text-shadow: 0 0 38px color-mix(in srgb, var(--accent-soft) 28%, transparent), 0 14px 40px rgba(0, 0, 0, .45);
+}
+
+.official-hero__label {
+  margin: 22px 0 0;
+  color: var(--on-dark-soft);
+  font-family: var(--kr-display);
+  font-size: clamp(13px, 1.2vw, 15px);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  animation-delay: 500ms;
+}
+
+.official-hero__lead {
+  max-width: 46ch;
+  margin: 22px 0 0;
+  color: var(--on-dark);
+  font-size: clamp(15px, 1.5vw, 17.5px);
+  font-weight: 400;
+  line-height: 1.85;
+  animation-delay: 600ms;
+}
+
+.official-hero__schools {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--white-line);
+  padding: 0;
+  color: var(--on-dark-muted);
+  font-family: var(--kr-display);
+  font-size: 14px;
+  list-style: none;
+  animation-delay: 700ms;
+}
+
+.official-hero__schools li { transition: color 300ms var(--ease-out); }
+.official-hero__schools li:hover { color: var(--accent-soft); }
+
+.official-hero__schools li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.official-hero__schools li::before {
+  color: var(--accent);
+  content: '—';
+  font-size: 11px;
+}
+
+.official-hero__scroll {
+  position: absolute;
+  z-index: 2;
+  right: 44px;
+  bottom: 38px;
+  display: grid;
+  gap: 10px;
+  color: var(--on-dark-soft);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-decoration: none;
+  animation: van-enter 900ms var(--ease-out) 900ms both;
+  justify-items: center;
+  transition: color 260ms var(--ease-out);
+}
+
+/* 진입 애니메이션이 opacity를 점유하므로 페이드는 자식에 적용한다. */
+.official-hero__scroll > * {
+  opacity: var(--parallax-fade, 1);
+  transition: opacity 140ms linear;
+}
+
+.official-hero__scroll:hover { color: var(--accent-soft); }
+
+.official-hero__scroll i {
+  display: block;
+  width: 1px;
+  height: 46px;
+  background: linear-gradient(180deg, var(--accent-soft), transparent);
+  animation: van-cue 2.4s var(--ease-soft) infinite;
+}

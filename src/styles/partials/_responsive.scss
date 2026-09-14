@@ -1,0 +1,1116 @@
+// 반응형 · 쇼케이스 모션 · 레이아웃 v2
+// global.css 에서 분리했습니다. 선언 내용은 그대로이며 순서도 보존합니다.
+
+/* 10. 반응형 ----------------------------------------------------------- */
+
+@media (max-width: 1420px) {
+  .section-rail { display: none; }
+}
+
+@media (max-width: 1180px) {
+  .desktop-nav { display: none; }
+  .language-link { margin-left: auto; }
+  .mobile-menu { display: block; margin-left: 10px; }
+  .mobile-menu summary { display: flex; align-items: center; gap: 10px; padding: 9px 13px; border: 1px solid var(--line-strong); border-radius: 999px; cursor: pointer; font-size: 12.5px; font-weight: 700; transition: background 300ms var(--ease-out), color 300ms var(--ease-out); }
+  .mobile-menu summary:hover { color: #fff; background: var(--shade-800); }
+  .mobile-menu summary:hover i, .mobile-menu summary:hover i::before, .mobile-menu summary:hover i::after { background: #fff; }
+  .mobile-menu summary i, .mobile-menu summary i::before, .mobile-menu summary i::after { display: block; width: 16px; height: 1.5px; background: var(--shade-800); content: ''; transition: transform 300ms var(--ease-out), background 300ms var(--ease-out); }
+  .mobile-menu summary i::before { transform: translateY(-5px); }
+  .mobile-menu summary i::after { transform: translateY(3.5px); }
+  .mobile-menu[open] summary i { background: transparent; }
+  .mobile-menu[open] summary i::before { transform: rotate(45deg); }
+  .mobile-menu[open] summary i::after { transform: rotate(-45deg) translateY(-1px); }
+  .mobile-menu[open] > nav { position: fixed; z-index: 120; top: var(--header-h); right: 0; left: 0; display: grid; max-height: calc(100svh - var(--header-h)); overflow: auto; padding: 26px; color: #fff; background: var(--shade-900); animation: van-enter 420ms var(--ease-out) both; }
+  .mobile-menu__top { display: flex; justify-content: space-between; margin-bottom: 16px; padding-bottom: 18px; border-bottom: 1px solid var(--white-line); color: var(--on-dark-muted); font-family: var(--display); font-size: 12px; letter-spacing: .12em; }
+  .mobile-menu__top a { color: #fff; font-weight: 600; text-decoration: none; }
+  .mobile-menu nav > a { display: flex; gap: 20px; padding: 15px 0; border-bottom: 1px solid rgba(255, 255, 255, .1); color: #fff; font-family: var(--kr-display); font-size: 19px; text-decoration: none; transition: padding-left 300ms var(--ease-out), color 300ms var(--ease-out); }
+  .mobile-menu nav > a:hover { padding-left: 8px; color: var(--accent-soft); }
+  .mobile-menu nav > a span { color: var(--accent-soft); font-family: var(--display); font-size: 13px; font-weight: 700; }
+  .site-header.is-condensed .mobile-menu[open] > nav { top: var(--header-h-condensed); max-height: calc(100svh - var(--header-h-condensed)); }
+}
+
+@media (max-width: 900px) {
+  /* 좁은 화면에서는 가로 이동 리빌이 문서 폭을 넘겨 가로 스크롤을 만든다 → 세로로 통일. */
+  .js-ready [data-reveal='left'],
+  .js-ready [data-reveal='right'] { translate: 0 26px; }
+
+  .home-section { padding: 92px 0; }
+  .editorial-layout, .conference-spotlight__grid, .philosophy-section__grid, .support-layout, .contact-section__grid { grid-template-columns: 1fr; gap: 48px; }
+  .section-intro--sticky { position: static; }
+  .endorsement-grid, .advisor-grid { grid-template-columns: 1fr; }
+
+  /* 계단식 오프셋·비대칭·벤토는 좁은 화면에서 단일 열로 되돌린다. */
+  .activity-grid { grid-template-columns: 1fr; }
+  .activity-grid > *:nth-child(2), .activity-grid > *:nth-child(3) { margin-top: 0; }
+  .leader-grid { grid-template-columns: 1fr; }
+  .leader-grid > *:nth-child(2), .leader-grid > *:nth-child(3) { grid-column: auto; margin-top: 0; }
+  .roadmap-grid { grid-template-columns: 1fr; }
+  .roadmap-grid > * { grid-column: auto !important; }
+  .philosophy-section figure { position: static; }
+  .section-intro::before { font-size: clamp(96px, 24vw, 150px); }
+  .endorsement-card--featured, .profile-card--primary { grid-column: auto; }
+  .profile-card--primary { grid-template-columns: .8fr 1.2fr; }
+  .activity-grid { gap: 18px; }
+  .activity-card { display: grid; grid-template-columns: .8fr 1.2fr; }
+  .activity-card__media { aspect-ratio: auto; }
+  .activity-card__body { min-height: 0; }
+  .roadmap-grid { border-left: 0; }
+  .roadmap-grid article { min-height: 0; border-left: 1px solid var(--line); }
+  .archive-toolbar { grid-template-columns: 1fr; }
+  .archive-list article { grid-template-columns: 240px 1fr; }
+  .to-top { right: 16px; bottom: 16px; }
+  .info-grid, .info-grid--trio { grid-template-columns: 1fr; }
+  .official-hero__content { grid-template-columns: 1fr; gap: 30px; padding-block: 130px 76px; }
+  .official-hero__lede, .official-hero__meta { grid-column: 1; }
+  .apply-cta { padding: 48px 32px; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 16.5px; }
+  .container, .footer-inner, .footer-bottom { width: min(100% - 34px, 1280px); }
+  .header-inner { width: calc(100% - 26px); }
+  :root { --header-h: 66px; --header-h-condensed: 58px; }
+  .brand img { width: 70px; }
+  .brand > span { display: none; }
+  .language-link { height: 32px; padding-inline: 12px; }
+  .official-hero__content { grid-template-columns: 1fr; padding-block: 108px 72px; }
+  .official-hero__lede, .official-hero__meta { grid-column: 1; }
+  .official-hero__meta { padding-top: 26px; }
+  .official-hero__kicker { font-size: 9.5px; letter-spacing: .16em; }
+  .official-hero__logo { width: 140px; margin-bottom: 22px; }
+  .official-hero h1 { font-size: 30px; line-height: 1.14; }
+  .official-hero__lead br { display: none; }
+  .official-hero__scroll { right: 18px; bottom: 18px; }
+  .official-hero__scroll i { height: 32px; }
+  .home-section { padding: 76px 0; }
+  .section-intro { margin-bottom: 38px; }
+  .section-number { font-size: 32px; }
+  .section-number::after { width: 40px; }
+  .prose-stack p { font-size: 16.5px; line-height: 1.94; }
+  .prose-stack .prose-lead { padding-left: 18px; font-size: 17.5px; }
+  .section-lead { font-size: 16.5px; }
+  .endorsement-card, .endorsement-card--featured { padding: 26px; }
+  .profile-card--primary, .activity-card { display: block; }
+  .profile-card__portrait { min-height: 0; max-height: 480px; }
+  .profile-card__body { padding: 28px; }
+  .profile-card__body::before { top: 28px; }
+  .advisor-card { grid-template-columns: 66px 1fr; gap: 18px; padding: 22px; }
+  .advisor-card > img, .advisor-card__monogram { width: 66px; height: 66px; }
+  .advisor-gallery { grid-template-columns: 1fr; }
+  .advisor-gallery img { height: 240px; }
+  .activity-card__media { aspect-ratio: 4 / 3; }
+  .conference-spotlight, .philosophy-section { padding: 82px 0; }
+  .conference-program { grid-template-columns: 1fr; }
+  .conference-spotlight dl div { grid-template-columns: 76px 1fr; }
+  .philosophy-section figure img { min-height: 280px; }
+  .donation-card { padding: 30px 24px; }
+  .donation-card dl > div { grid-template-columns: 1fr; gap: 4px; }
+  .donation-card dd strong { display: block; margin: 2px 0 10px; font-size: 28px; }
+  .contact-list > * { grid-template-columns: 100px 1fr; }
+  .footer-inner, .footer-bottom { align-items: flex-start; flex-direction: column; }
+  .site-footer nav { justify-content: flex-start; }
+  .archive-hero { padding: 88px 0 66px; }
+  .archive-list article { grid-template-columns: 1fr; }
+  .archive-list article > img, .archive-list__mark { height: 220px; min-height: 0; }
+  .archive-list article > div { padding: 26px; }
+  .archive-article-gallery { grid-template-columns: 1fr; }
+  .archive-article-gallery img { height: 240px; }
+  .page-hero { padding: 86px 0 68px; }
+  .info-card { padding: 26px; }
+  .fact-list > div { grid-template-columns: 1fr; gap: 4px; }
+  .fact-list > div:hover { padding-left: 0; }
+  .step-list { grid-template-columns: 1fr; }
+  .notice { padding: 24px 22px 24px 26px; font-size: 16px; }
+  .apply-cta { padding: 40px 22px; }
+  .cta-button { justify-content: center; width: 100%; padding: 16px 24px; font-size: 15px; }
+  .cta-link { height: 32px; margin-left: 8px; padding: 0 12px; font-size: 11.5px; }
+  .ticker { padding: 15px 0; }
+  .ticker__group { gap: 28px; padding-right: 28px; }
+  .ticker__group span { font-size: 12.5px; letter-spacing: .2em; }
+  .ornament i { max-width: 90px; }
+  body::after { opacity: .22; }
+  .ticker--display { padding: 22px 0; }
+  .ticker--display .ticker__group { gap: 30px; padding-right: 30px; }
+  .ticker--display .ticker__group span { font-size: 34px; -webkit-text-stroke-width: 1px; }
+  .activity-card__body::after { font-size: 92px; bottom: -12px; }
+  .section-intro::before { font-size: 92px; top: -0.28em; }
+}
+
+/* 10-2. 쇼케이스 모션 · 질감 ------------------------------------------- */
+
+/* 애니메이션 가능한 커스텀 속성 — 그라데이션 각도를 부드럽게 돌린다. */
+@property --sweep-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 100deg;
+}
+
+/* 10-2-1. 필름 그레인 — 편집물 특유의 질감을 얇게 얹는다. */
+body::after {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  content: '';
+  mix-blend-mode: soft-light;
+  opacity: .35;
+  pointer-events: none;
+}
+
+/* 10-2-2. 제목 단어 단위 등장 */
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.split-word > span {
+  display: inline-block;
+  transition:
+    translate 820ms var(--ease-out),
+    opacity 820ms var(--ease-out),
+    rotate 820ms var(--ease-out);
+  transition-delay: calc(var(--word-index, 0) * 46ms);
+}
+
+/*
+  숨기는 조건은 "리빌 컨테이너 안에 있고 그 컨테이너가 아직 리빌되지 않았을 때"뿐이다.
+  `[data-split]:not(.is-revealed)`처럼 분할 대상 자신을 조건에 넣으면,
+  .is-revealed는 부모(.section-intro)에 붙으므로 h2가 영구히 opacity: 0에 갇힌다.
+*/
+.js-ready [data-reveal]:not(.is-revealed) .split-word > span {
+  opacity: 0;
+  rotate: 2.4deg;
+  translate: 0 105%;
+}
+
+/* 리빌 컨테이너 밖에 있는 히어로 제목은 자체 진입 애니메이션으로 처리한다. */
+.official-hero h1 .split-word > span,
+.page-hero h1 .split-word > span,
+.archive-hero h1 .split-word > span {
+  animation: van-word-rise 1000ms var(--ease-out) both;
+  animation-delay: calc(320ms + var(--word-index, 0) * 60ms);
+  transition: none;
+}
+
+@keyframes van-word-rise {
+  from { opacity: 0; rotate: 3deg; translate: 0 108%; }
+  to { opacity: 1; rotate: 0deg; translate: 0 0; }
+}
+
+/* 10-2-3. 내비게이션 슬라이딩 인디케이터 */
+.nav-indicator {
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  width: var(--indicator-w, 0);
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(var(--indicator-x, 0));
+  transition: transform 420ms var(--ease-out), width 420ms var(--ease-out), opacity 300ms var(--ease-out);
+}
+
+.nav-indicator.is-visible { opacity: 1; }
+.desktop-nav { position: relative; }
+
+/* 인디케이터가 켜지면 개별 밑줄은 숨겨 이중선을 막는다. */
+.desktop-nav:has(.nav-indicator.is-visible) a::after { opacity: 0; }
+
+/* 10-2-4. 마그네틱 요소 */
+[data-magnetic] {
+  transition: translate 320ms var(--ease-out);
+  translate: var(--magnet-x, 0) var(--magnet-y, 0);
+}
+
+/* 10-2-5. 무한 티커 — 섹션 사이를 잇는 장식 띠 */
+.ticker {
+  position: relative;
+  overflow: hidden;
+  padding: 20px 0;
+  border-block: 1px solid var(--line);
+  background: var(--paper-strong);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  user-select: none;
+}
+
+.ticker--dark {
+  border-block-color: var(--white-line);
+  background: var(--shade-900);
+}
+
+.ticker__track {
+  display: flex;
+  width: max-content;
+  gap: 0;
+  animation: van-ticker 38s linear infinite;
+}
+
+.ticker:hover .ticker__track { animation-play-state: paused; }
+
+.ticker__group {
+  display: flex;
+  align-items: center;
+  gap: 42px;
+  padding-right: 42px;
+}
+
+.ticker__group span {
+  color: var(--accent-deep);
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .28em;
+  white-space: nowrap;
+}
+
+.ticker--dark .ticker__group span { color: var(--accent-soft); }
+
+.ticker__group i {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 auto;
+  rotate: 45deg;
+  background: var(--accent);
+}
+
+@keyframes van-ticker {
+  from { translate: 0 0; }
+  to { translate: -50% 0; }
+}
+
+/* 10-2-6. 장식 구분선 — 리빌 시 좌우로 그려진다 */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 0;
+  color: var(--accent);
+}
+
+.ornament i {
+  height: 1px;
+  flex: 1;
+  max-width: 240px;
+  background: linear-gradient(90deg, transparent, currentColor);
+  scale: 0 1;
+  transform-origin: right;
+  transition: scale 900ms var(--ease-out);
+}
+
+.ornament i:last-child {
+  background: linear-gradient(90deg, currentColor, transparent);
+  transform-origin: left;
+}
+
+.ornament span { font-size: 9px; rotate: 45deg; }
+
+.is-revealed .ornament i { scale: 1 1; }
+.js-ready [data-reveal]:not(.is-revealed) .ornament i { scale: 0 1; }
+
+/* 10-2-7. 히어로 금빛 입자 */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-particles i {
+  position: absolute;
+  top: var(--py);
+  left: var(--px);
+  width: var(--ps, 3px);
+  height: var(--ps, 3px);
+  border-radius: 50%;
+  background: var(--accent-soft);
+  box-shadow: 0 0 12px 2px color-mix(in srgb, var(--accent-soft) 55%, transparent);
+  opacity: 0;
+  animation: van-particle var(--pd, 14s) ease-in-out var(--pl, 0s) infinite;
+}
+
+@keyframes van-particle {
+  0% { opacity: 0; translate: 0 20px; }
+  18% { opacity: .85; }
+  70% { opacity: .5; }
+  100% { opacity: 0; translate: 0 -120px; }
+}
+
+/* 10-2-8. 섹션 광원 — 어두운 섹션에서 커서를 따라오는 은은한 빛 */
+[data-spotlight].home-section--ink::before,
+[data-spotlight].conference-spotlight::after,
+[data-spotlight].philosophy-section::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: radial-gradient(circle 520px at var(--pointer-x, 50%) var(--pointer-y, 50%), color-mix(in srgb, var(--accent) 10%, transparent), transparent 65%);
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 600ms var(--ease-out);
+}
+
+[data-spotlight].is-lit::before,
+[data-spotlight].conference-spotlight.is-lit::after { opacity: 1; }
+
+.home-section--ink { position: relative; }
+.home-section--ink > .container { position: relative; z-index: 1; }
+
+/* 10-2-9. 카드 3D 틸트 공통 */
+.activity-card,
+.info-card,
+.profile-card,
+.endorsement-card {
+  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+}
+
+.activity-card:hover { transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-10px); }
+.info-card:hover { transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-6px); }
+.profile-card:hover { transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-8px); }
+.endorsement-card:hover { transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-6px); }
+
+/* 10-2-10. 골드 스윕 테두리 — 주요 카드 위를 빛이 훑고 지나간다 */
+.donation-card,
+.apply-cta {
+  --sweep-angle: 100deg;
+}
+
+.donation-card:hover,
+.apply-cta:hover {
+  animation: van-sweep 2.6s linear infinite;
+}
+
+@keyframes van-sweep {
+  to { --sweep-angle: 460deg; }
+}
+
+.donation-card::before,
+.apply-cta::before {
+  background:
+    radial-gradient(circle 320px at var(--pointer-x, 50%) var(--pointer-y, 50%), color-mix(in srgb, var(--accent-soft) 18%, transparent), transparent 68%),
+    linear-gradient(var(--sweep-angle), transparent 42%, color-mix(in srgb, var(--accent-soft) 10%, transparent) 50%, transparent 58%);
+}
+
+/* 10-2-11. 네이티브 스크롤 연동 애니메이션 (지원 브라우저 한정) */
+@supports (animation-timeline: scroll()) {
+  /* 진행 바를 스크롤 타임라인에 직접 연결 → JS 스크롤 계산 불필요 */
+  .scroll-progress::after {
+    animation: van-progress linear;
+    animation-timeline: scroll(root block);
+    transform: none;
+    transform-origin: left;
+  }
+
+  @keyframes van-progress {
+    from { scale: 0 1; }
+    to { scale: 1 1; }
+  }
+}
+
+@supports (animation-timeline: view()) {
+  /* 큰 이미지가 뷰포트를 지나가는 동안 천천히 확대 */
+  .philosophy-section figure img,
+  .archive-article-cover img {
+    animation: van-view-zoom linear both;
+    animation-range: entry 0% exit 100%;
+    animation-timeline: view();
+  }
+
+  @keyframes van-view-zoom {
+    from { scale: 1; }
+    to { scale: 1.1; }
+  }
+
+  /* 로드맵 카드의 금색 상단선이 스크롤에 맞춰 그려진다 */
+  .roadmap-grid article::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 0%, transparent));
+    content: '';
+    animation: van-line-draw linear both;
+    animation-range: entry 10% cover 40%;
+    animation-timeline: view();
+    transform-origin: left;
+  }
+
+  @keyframes van-line-draw {
+    from { scale: 0 1; }
+    to { scale: 1 1; }
+  }
+}
+
+/* 10-3. 레이아웃 v2 — 타임라인 · 대형 티커 · 추가 호버 -------------------- */
+
+/*
+  10-3-1. 연혁 타임라인
+  원본은 긴 문단 5개를 한 덩어리로 쌓아둬서 어디까지 읽었는지 놓치기 쉬웠다.
+  좌측 레일과 노드를 주면 읽는 위치가 보이고, 문단 사이 호흡도 생긴다.
+  레일은 스크롤에 맞춰 그려진다.
+*/
+.timeline {
+  position: relative;
+  max-width: 64ch;
+  margin: 0;
+  padding: 4px 0 0 52px;
+  list-style: none;
+}
+
+.timeline::before {
+  position: absolute;
+  top: 14px;
+  bottom: 20px;
+  left: 11px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 15%, transparent));
+  content: '';
+  scale: 1 0;
+  transform-origin: top;
+  transition: scale 1400ms var(--ease-out) 200ms;
+}
+
+.is-revealed .timeline::before,
+.timeline.is-revealed::before { scale: 1 1; }
+
+.timeline > li {
+  position: relative;
+  padding-bottom: 38px;
+}
+
+.timeline > li:last-child { padding-bottom: 0; }
+
+/*
+  노드는 의사요소가 아니라 실제 요소로 둔다. counter() + ::before 조합이
+  이 구조에서 박스를 생성하지 않는 문제가 있었고(레일만 렌더),
+  실제 요소는 렌더가 확실하고 스타일·접근성 제어도 명확하다.
+  숫자는 장식이므로 aria-hidden 으로 낭독에서 제외한다.
+*/
+.timeline__node {
+  position: absolute;
+  top: 10px;
+  left: -50px;
+  display: grid;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 5px var(--paper), 0 0 0 6px color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--paper-strong);
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  place-items: center;
+  transition: transform 420ms var(--ease-out), background 420ms var(--ease-out), box-shadow 420ms var(--ease-out);
+}
+
+
+.timeline > li:hover .timeline__node {
+  background: var(--accent-deep);
+  box-shadow: 0 0 0 5px var(--paper), 0 0 0 11px color-mix(in srgb, var(--accent) 26%, transparent);
+  transform: scale(1.18);
+}
+
+.timeline p {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--kr-display);
+  font-size: 17.5px;
+  line-height: 2.06;
+}
+
+.timeline .prose-lead {
+  padding-left: 0;
+  border-left: 0;
+  color: var(--text-strong);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.92;
+}
+
+/*
+  10-3-2. 대형 티커 — 섹션 사이를 잇는 큰 활자 띠.
+  기존 티커가 마음에 든다고 하셔서 같은 원리로 크게 키운 변주를 추가했다.
+*/
+.ticker--display { padding: 34px 0; }
+.ticker--display .ticker__group { gap: 54px; padding-right: 54px; }
+
+.ticker--display .ticker__group span {
+  color: transparent;
+  font-size: clamp(15px, 1.5vw, 20px);
+  font-weight: 600;
+  letter-spacing: .22em;
+  -webkit-text-stroke: 0.6px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.ticker--display .ticker__group i { width: 9px; height: 9px; }
+.ticker--display .ticker__track { animation-duration: 52s; }
+
+/* 방향 반전 변주 */
+.ticker--reverse .ticker__track { animation-direction: reverse; }
+
+/* 10-3-3. 활동 카드 고스트 인덱스 */
+.activity-card__body { position: relative; z-index: 0; }
+
+.activity-card__body::after {
+  position: absolute;
+  z-index: -1;
+  right: 14px;
+  bottom: -18px;
+  color: transparent;
+  content: attr(data-index);
+  font-family: var(--display);
+  font-size: 74px;
+  font-weight: 700;
+  line-height: 1;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--accent) 22%, transparent);
+  pointer-events: none;
+  transition: transform 620ms var(--ease-out), -webkit-text-stroke-color 620ms var(--ease-out);
+}
+
+.activity-card:hover .activity-card__body::after {
+  -webkit-text-stroke-color: color-mix(in srgb, var(--accent) 42%, transparent);
+  transform: translateY(-8px);
+}
+
+/* 10-3-4. 카드 그라데이션 테두리 — 호버 시 윤곽이 그려진다 */
+.info-card::after,
+.activity-card::after,
+.roadmap-grid article::before {
+  border-radius: inherit;
+}
+
+.info-card,
+.activity-card { position: relative; }
+
+.info-card::after,
+.activity-card::after {
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--accent), transparent 42%, transparent 58%, var(--accent-soft));
+  content: '';
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 520ms var(--ease-out);
+}
+
+.info-card:hover::after,
+.activity-card:hover::after { opacity: 1; }
+
+/* 10-3-5. 이미지 호버 마스크 리빌 */
+.advisor-gallery figure img,
+.archive-list article > img {
+  clip-path: inset(0 0 0 0);
+  transition: transform 900ms var(--ease-out), clip-path 900ms var(--ease-out);
+}
+
+.advisor-gallery figure:hover img { clip-path: inset(2% 2% 2% 2%); }
+
+/* 10-3-6. 링크 화살표 모프 */
+.inline-link span,
+.button-link span,
+.cta-button span {
+  display: inline-block;
+  transition: transform 420ms var(--ease-out), letter-spacing 420ms var(--ease-out);
+}
+
+.inline-link:hover span { letter-spacing: .1em; }
+
+/* 10-3-7. 연락처 항목 호버 시 자간 확장 */
+.contact-list > a:hover span { letter-spacing: .24em; }
+.contact-list span { transition: letter-spacing 420ms var(--ease-out); }
+
+/* 10-4. 레이아웃 v2 반응형 — 기본 규칙보다 뒤에 와야 적용된다 --------------- */
+
+@media (max-width: 640px) {
+  .timeline { padding-left: 40px; }
+  .timeline__node { left: -40px; width: 24px; height: 24px; font-size: 10px; }
+  .timeline p { font-size: 16.5px; line-height: 1.96; }
+  .timeline .prose-lead { font-size: 17.5px; }
+}
+
+/* 활동 7분야 그리드 (어두운 배경) */
+.domain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: 16px;
+  margin-top: 56px;
+}
+
+.domain-card {
+  padding: 24px;
+  border: 1px solid var(--white-line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, #fff 4%, transparent);
+  transition: border-color 440ms var(--ease-out), background 440ms var(--ease-out), transform 440ms var(--ease-out);
+}
+
+.domain-card:hover {
+  border-color: color-mix(in srgb, var(--accent-soft) 48%, transparent);
+  background: color-mix(in srgb, #fff 8%, transparent);
+  transform: translateY(-5px);
+}
+
+.domain-card__head { display: flex; align-items: baseline; gap: 9px; margin: 0 0 14px; }
+.domain-card__index { color: var(--accent-soft); font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+.domain-card__head strong { color: #fff; font-family: var(--display); font-size: 16px; font-weight: 600; letter-spacing: .01em; }
+.domain-card__head em { color: var(--on-dark-muted); font-size: 12.5px; font-style: normal; }
+
+.domain-card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+
+.domain-card li {
+  position: relative;
+  padding-left: 15px;
+  color: var(--on-dark-soft);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.domain-card li::before { position: absolute; left: 0; color: var(--accent); content: '·'; font-weight: 700; }
+
+@media (max-width: 640px) {
+  .domain-grid { grid-template-columns: 1fr; margin-top: 40px; }
+  .domain-card { padding: 20px; }
+}
+
+/* 콘퍼런스 프로그램 설명 · 협력 단체 */
+.program-note {
+  max-width: 62ch;
+  margin: 0 0 26px;
+  padding-left: 16px;
+  border-left: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  color: var(--on-dark-soft);
+  font-size: 15px;
+  line-height: 1.86;
+}
+
+.partner-strip { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--white-line); }
+.partner-strip h3 { margin: 0 0 14px; color: var(--accent-soft); font-family: var(--display); font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.partner-strip ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+
+.partner-strip li {
+  padding: 7px 13px;
+  border: 1px solid var(--white-line);
+  border-radius: 999px;
+  color: var(--on-dark-soft);
+  font-size: 13px;
+  transition: border-color 380ms var(--ease-out), color 380ms var(--ease-out), transform 380ms var(--ease-out);
+}
+
+.partner-strip li:hover {
+  border-color: color-mix(in srgb, var(--accent-soft) 55%, transparent);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* 10-5. 모집 부서 -------------------------------------------------------- */
+
+.dept-list { display: grid; gap: 16px; }
+
+.dept-card {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) 180px;
+  gap: 26px;
+  align-items: start;
+  padding: 28px 30px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-strong);
+  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 460ms var(--ease-out), box-shadow 460ms var(--ease-out), border-color 460ms var(--ease-out);
+}
+
+.dept-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  box-shadow: var(--shadow-md);
+  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-5px);
+}
+
+.dept-card__index {
+  color: var(--accent-deep);
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.dept-card h3 { margin: 0 0 10px; color: var(--text-strong); font-family: var(--kr-display); font-size: 19px; font-weight: 700; }
+.dept-card__summary { margin: 0 0 12px; color: var(--text-soft); font-size: 15.5px; line-height: 1.8; }
+
+.dept-card__fit {
+  margin: 0;
+  padding-left: 14px;
+  border-left: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--text-muted);
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+
+.dept-card__fit strong { display: block; color: var(--accent-deep); font-size: 12.5px; font-weight: 700; letter-spacing: .04em; }
+
+.dept-card__meta { margin: 0; display: grid; gap: 10px; }
+.dept-card__meta > div { display: grid; gap: 2px; }
+.dept-card__meta dt { color: var(--text-muted); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; }
+.dept-card__meta dd { margin: 0; color: var(--text-strong); font-size: 14.5px; font-weight: 500; }
+
+.terms-block {
+  margin-top: 30px;
+  padding: 28px 30px;
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--paper-strong) 70%, transparent);
+}
+
+.terms-block h3 { margin: 0 0 14px; color: var(--text-strong); font-family: var(--kr-display); font-size: 17px; font-weight: 700; }
+.terms-block ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+
+.terms-block li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--text-soft);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.terms-block li::before { position: absolute; left: 0; color: var(--accent); content: '—'; }
+
+/* 링커리어 모집 공고 링크. 주소를 그대로 노출해 누를 수 있는 링크임을 분명히 한다. */
+.posting-block { margin-top: 30px; }
+
+.posting-block__note {
+  margin: 0 0 12px;
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.posting-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 24px;
+  border: 1px solid color-mix(in srgb, var(--accent) 46%, transparent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  color: var(--text-strong);
+  text-decoration: none;
+  transition: border-color 420ms var(--ease-out), background-color 420ms var(--ease-out), transform 420ms var(--ease-out);
+}
+
+.posting-card:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  transform: translateY(-2px);
+}
+
+.posting-card__text { display: grid; gap: 5px; min-width: 0; }
+
+.posting-card__text strong {
+  font-family: var(--kr-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+
+.posting-card__url {
+  overflow-wrap: anywhere;
+  color: var(--accent-deep);
+  font-family: var(--display);
+  font-size: 13px;
+  letter-spacing: .02em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.posting-card__arrow {
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-size: 18px;
+  transition: transform 420ms var(--ease-out);
+}
+
+.posting-card:hover .posting-card__arrow { transform: translateX(6px); }
+
+/* 후원 방식 3분류 — 북 펀딩 / 개인 후원 / 기업·단체 후원 */
+.way-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 34px;
+}
+
+.way-card {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 30px 28px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--paper-strong) 76%, transparent);
+  transition: border-color 480ms var(--ease-out), transform 480ms var(--ease-out), box-shadow 480ms var(--ease-out);
+}
+
+.way-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
+  box-shadow: 0 18px 40px -28px color-mix(in srgb, var(--shade-800) 45%, transparent);
+}
+
+.way-card__head { display: flex; align-items: center; gap: 12px; }
+
+.way-card__index {
+  color: var(--accent);
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+
+.way-card__tag {
+  color: var(--text-muted);
+  font-family: var(--display);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.way-card h3 {
+  margin: 0;
+  color: var(--text-strong);
+  font-family: var(--kr-display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+.way-card__body { margin: 0; color: var(--text-soft); font-size: 15px; line-height: 1.78; }
+
+.way-card__tiers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 3px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.way-card__tiers li {
+  padding: 7px 13px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  color: var(--accent-deep);
+  font-family: var(--kr-display);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.way-card__points { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+
+.way-card__points li {
+  position: relative;
+  padding-left: 16px;
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.way-card__points li::before { position: absolute; left: 0; color: var(--accent); content: '—'; }
+
+.way-card__note {
+  margin: auto 0 0;
+  padding-top: 13px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.way-card .inline-link { margin-top: 4px; align-self: flex-start; font-size: 13px; }
+
+.way-contact {
+  display: grid;
+  gap: 16px;
+  margin-top: 26px;
+  padding: 28px 30px;
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+}
+
+.way-contact__head h3 {
+  margin: 0 0 7px;
+  color: var(--text-strong);
+  font-family: var(--kr-display);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.way-contact__head p { margin: 0; color: var(--text-soft); font-size: 14.5px; line-height: 1.72; }
+
+/* 담당자는 블록 맨 위에 둔다. 누구에게 연락하는지가 먼저 보여야 한다. */
+.way-contact__manager {
+  margin: 0 0 8px;
+  color: var(--accent-deep);
+  font-family: var(--kr-display);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+
+.way-contact__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* 카드 안의 외부 참여 링크 (텀블벅 등) */
+.way-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: var(--accent-deep);
+  color: #fff;
+  font-family: var(--kr-display);
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 380ms var(--ease-out), transform 380ms var(--ease-out);
+}
+
+.way-card__cta:hover { background: var(--shade-800); transform: translateY(-2px); }
+.way-card__cta span { transition: transform 380ms var(--ease-out); }
+.way-card__cta:hover span { transform: translateX(4px); }
+
+/* 정기 후원 신청 폼 */
+.donor-form { max-width: 780px; margin-top: 34px; }
+
+.donor-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.donor-form__wide, .donor-form__custom { grid-column: 1 / -1; }
+.donor-form label { display: grid; gap: 8px; }
+
+/* display 를 지정하면 UA 스타일의 [hidden] { display: none } 이 무력화된다.
+   '직접 입력' 금액칸이 항상 보이던 원인이므로 명시적으로 다시 숨긴다. */
+.donor-form label[hidden] { display: none; }
+
+.donor-form label > span {
+  color: var(--text-strong);
+  font-family: var(--kr-display);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.donor-form label > span i {
+  margin-left: 5px;
+  color: var(--accent-deep);
+  font-size: 11.5px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.donor-form input, .donor-form select, .donor-form textarea {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid color-mix(in srgb, var(--text-strong) 20%, transparent);
+  border-radius: var(--radius);
+  background: var(--paper-strong);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15.5px;
+  transition: border-color 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
+}
+
+.donor-form textarea { resize: vertical; line-height: 1.7; }
+
+.donor-form input:focus, .donor-form select:focus, .donor-form textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+  outline: none;
+}
+
+.donor-form__consent {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 11px;
+  align-items: start;
+  margin-top: 22px;
+}
+
+.donor-form__consent input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--accent); }
+
+.donor-form__consent > span {
+  color: var(--text-soft);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.donor-form__actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 26px; }
+.donor-form__actions .button-link { color: var(--accent-deep); border-color: color-mix(in srgb, var(--accent) 50%, transparent); cursor: pointer; }
+.donor-form__actions .button-link:hover { color: var(--shade-900); }
+
+.donor-form__hint { margin: 18px 0 0; color: var(--text-muted); font-size: 13.5px; line-height: 1.72; }
+
+.donor-form__error {
+  margin: 14px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, #c0392b 12%, transparent);
+  color: #96271b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* .button-link 은 어두운 섹션 기준(흰 글씨·흰 테두리)이라 밝은 배경에서 흐려진다.
+   후원 창구는 밝은 배경 위에 놓이므로 대비를 다시 잡는다. */
+.way-contact .button-link {
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  color: var(--accent-deep);
+}
+
+/* 호버 시에는 밝은 그라디언트가 채워지므로 기본 규칙과 같은 어두운 글씨로 둔다. */
+.way-contact .button-link:hover { color: var(--shade-900); }
+
+.way-contact__manager {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+@media (max-width: 1000px) {
+  .way-list { grid-template-columns: minmax(0, 1fr); }
+  .way-card__note { margin-top: 4px; }
+}
+
+@media (max-width: 900px) {
+  .dept-card { grid-template-columns: 44px minmax(0, 1fr); }
+  .dept-card__meta { grid-column: 2; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .dept-card { gap: 16px; padding: 22px; }
+  .terms-block { padding: 22px; }
+  .way-card { padding: 24px 22px; }
+  .way-card__tiers li { font-size: 12px; padding: 6px 11px; }
+  .way-contact { padding: 22px; }
+  .way-contact__actions { flex-direction: column; align-items: flex-start; }
+  .donor-form__grid { grid-template-columns: minmax(0, 1fr); }
+  .donor-form__actions .cta-button, .donor-form__actions .button-link { width: 100%; justify-content: center; }
+  .archive-spec dl > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}

@@ -1,0 +1,136 @@
+// 디자인 토큰
+// global.css 에서 분리했습니다. 선언 내용은 그대로이며 순서도 보존합니다.
+
+/* 1. 디자인 토큰 ---------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+
+  /* ── 팔레트 ────────────────────────────────────────────────────────────
+     색은 이 블록에만 있습니다. 아래 --shade-* / --paper-* / --accent-* 값만
+     바꾸면 사이트 전체 색이 바뀝니다. 토큰 이름에 특정 색상명(navy, gold)을
+     쓰지 않은 이유입니다.
+
+     기본 테마: 옵시디언 & 제이드
+     원본(네이비 + 골드)과 색상환에서 확실히 떨어뜨리면서, 사진이 많은
+     페이지에서도 인물 피부톤과 부딪히지 않는 조합으로 잡았습니다.
+     ──────────────────────────────────────────────────────────────────── */
+
+  /* 어두운 표면 — 숫자가 클수록 깊다 */
+  --shade-950: #090c0b;
+  --shade-900: #101413;
+  --shade-800: #1a2220;
+  --shade-700: #26332f;
+  --shade-600: #365049;
+
+  /* 밝은 표면 */
+  --paper: #f3f4f1;
+  --paper-strong: #fdfdfc;
+  --paper-tint: #e7e9e5;
+  --paper-warm: #e1e5df;
+
+  /* 강조 */
+  --accent: #2f9e7a;
+  --accent-soft: #86ddba;
+  --accent-deep: #17654b; /* 밝은 배경 위 라벨 텍스트용 — 대비 5.7:1 */
+
+  /* 텍스트 (밝은 배경) */
+  --text-strong: #121917;
+  --text: #242d2a;
+  --text-soft: #3f4845;
+  --text-muted: #545e5a;
+
+  /* 텍스트 (어두운 배경) */
+  --on-dark: #eef3f1;
+  --on-dark-soft: #c3d0cb;
+  --on-dark-muted: #99a8a2;
+
+  /* 상태 — 테마와 무관하게 유지 */
+  --ok: #7fd0a8;
+  --ok-soft: #9fe0be;
+
+  /* 선 · 그림자 */
+  --line: rgba(26, 34, 32, 0.16);
+  --line-strong: rgba(26, 34, 32, 0.28);
+  --white-line: rgba(255, 255, 255, 0.18);
+  --shadow-sm: 0 2px 10px rgba(9, 12, 11, 0.05);
+  --shadow-md: 0 14px 38px rgba(9, 12, 11, 0.1);
+  --shadow-lg: 0 30px 70px rgba(9, 12, 11, 0.16);
+  --shadow-accent: 0 18px 46px rgba(23, 101, 75, 0.22);
+
+  color-scheme: light;
+  /* 원본은 Cormorant Garamond + Noto Serif KR 로 세리프가 지배했다.
+     정체성을 확실히 떼기 위해 전부 산세리프로 옮겼다.
+     --display 는 라틴 표제·숫자용, --kr-display 는 한글 표제용. */
+  --display: 'Space Grotesk', 'Noto Sans KR', system-ui, sans-serif;
+  --kr-display: 'Noto Sans KR', 'Space Grotesk', system-ui, sans-serif;
+  --sans: 'Noto Sans KR', 'Space Grotesk', system-ui, sans-serif;
+  --ease-out: cubic-bezier(0.22, 0.7, 0.2, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --radius: 4px;
+  --header-h: 78px;
+  --header-h-condensed: 64px;
+}
+
+/* ── 대안 팔레트 ────────────────────────────────────────────────────────
+   <html data-theme="..."> 로 전환합니다. 비교용으로 함께 두었습니다.
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* 포레스트 & 코퍼 — 딥 포레스트에 코퍼 */
+[data-theme='forest'] {
+  --shade-950: #04100b;
+  --shade-900: #08170f;
+  --shade-800: #10291d;
+  --shade-700: #1a3d2b;
+  --shade-600: #2b5c40;
+  --paper: #f2f2e9;
+  --paper-strong: #fdfdf6;
+  --paper-tint: #e5e8dc;
+  --paper-warm: #e2e1cf;
+  --accent: #c0703c;
+  --accent-soft: #eaad7d;
+  --accent-deep: #8f4c1c;
+  --text-strong: #101f17;
+  --text: #223328;
+  --text-soft: #3d5044;
+  --text-muted: #53665a;
+  --on-dark: #eff5ef;
+  --on-dark-soft: #c5d5c8;
+  --on-dark-muted: #9db2a2;
+  --line: rgba(16, 41, 29, 0.16);
+  --line-strong: rgba(16, 41, 29, 0.28);
+  --shadow-sm: 0 2px 10px rgba(5, 20, 13, 0.05);
+  --shadow-md: 0 14px 38px rgba(5, 20, 13, 0.1);
+  --shadow-lg: 0 30px 70px rgba(5, 20, 13, 0.16);
+  --shadow-accent: 0 18px 46px rgba(143, 76, 28, 0.22);
+}
+
+
+/* 옥스블러드 & 브론즈 — 딥 버건디에 브론즈 */
+[data-theme='oxblood'] {
+  --shade-950: #12080a;
+  --shade-900: #1b0d10;
+  --shade-800: #33141a;
+  --shade-700: #4a1f26;
+  --shade-600: #6b2f38;
+  --paper: #f6f2ee;
+  --paper-strong: #fffdfa;
+  --paper-tint: #eae1da;
+  --paper-warm: #e7dbd1;
+  --accent: #b0745a;
+  --accent-soft: #e0ab90;
+  --accent-deep: #8a4a30;
+  --text-strong: #211316;
+  --text: #342429;
+  --text-soft: #4d3a3f;
+  --text-muted: #624e53;
+  --on-dark: #f7f1ef;
+  --on-dark-soft: #dcc9c9;
+  --on-dark-muted: #b8a1a2;
+  --line: rgba(51, 20, 26, 0.16);
+  --line-strong: rgba(51, 20, 26, 0.28);
+  --shadow-sm: 0 2px 10px rgba(18, 8, 10, 0.06);
+  --shadow-md: 0 14px 38px rgba(18, 8, 10, 0.11);
+  --shadow-lg: 0 30px 70px rgba(18, 8, 10, 0.18);
+  --shadow-accent: 0 18px 46px rgba(138, 74, 48, 0.24);
+}
