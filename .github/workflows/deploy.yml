@@ -1,25 +1,38 @@
 name: Deploy to Vercel
 
-# Vercel의 GitHub 연동이 이 저장소를 구독하지 않아 푸시가 배포로 이어지지 않습니다.
-# 이 워크플로는 반대 방향으로 동작합니다. Vercel이 GitHub를 당겨오는 대신,
-# GitHub Actions가 Vercel로 배포를 밀어넣습니다.
+# 저장소와 Vercel 프로젝트의 소유 계정이 다릅니다.
+# 저장소는 개인 계정 소유이고, Vercel 프로젝트와 도메인은 다른 계정에 있습니다.
+#
+# Vercel의 GitHub 연동은 저장소 Admin 권한을 요구하는데, 개인 저장소는
+# 협력자에게 Admin을 줄 수 없습니다(GitHub 제약). 그래서 Vercel이 GitHub를
+# 당겨오는 방향이 막힙니다.
+#
+# 이 워크플로는 반대 방향으로 동작합니다. GitHub Actions가 Vercel로 배포를
+# 밀어넣습니다. Vercel 쪽 Git 연동도, 저장소 Admin 권한도 필요하지 않습니다.
 #
 # 활성화 방법 — 아래 둘 중 하나만 등록하면 됩니다.
 #
-#   1) VERCEL_DEPLOY_HOOK_URL  (권장, 값 1개)
-#      Vercel → 프로젝트 → Settings → Git → Deploy Hooks에서
-#      브랜치 main으로 훅을 만들고 생성된 URL을 저장소 Secret으로 등록합니다.
-#
-#   2) VERCEL_TOKEN + VERCEL_ORG_ID + VERCEL_PROJECT_ID  (값 3개)
+#   1) VERCEL_TOKEN + VERCEL_ORG_ID + VERCEL_PROJECT_ID  (값 3개)
+#      Git 연동이 없는 프로젝트에도 배포되므로 이 구성에서는 이 방식을 씁니다.
 #      토큰: Vercel → Account Settings → Tokens
-#      ID  : Vercel → 프로젝트 → Settings → General 하단, 또는 로컬에서
+#      ID  : 프로젝트 → Settings → General 하단, 또는 로컬에서
 #            `npx vercel link` 실행 후 생성되는 .vercel/project.json
+#
+#   2) VERCEL_DEPLOY_HOOK_URL  (값 1개)
+#      Vercel → 프로젝트 → Settings → Git → Deploy Hooks.
+#      단 Deploy Hook은 프로젝트에 Git 연동이 있어야 생성됩니다.
 #
 # 둘 다 없으면 이 워크플로는 아무것도 하지 않고 성공으로 끝납니다(CI를 깨지 않음).
 # 등록 위치: 저장소 Settings → Secrets and variables → Actions → New repository secret
 
-# Deploy only when manually requested from GitHub Actions.
 on:
+  # main 에 반영되면 자동 배포한다. 시크릿이 없으면 조용히 건너뛴다.
+  push:
+    branches: [main]
+    # 배포 결과에 영향이 없는 문서 변경으로는 배포하지 않는다.
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
   workflow_dispatch:
 
 # 배포는 겹치면 안 되므로 직렬화합니다. 진행 중인 배포를 취소하지 않습니다.
