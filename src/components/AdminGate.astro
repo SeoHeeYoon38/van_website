@@ -1,0 +1,353 @@
+---
+/*
+  ┌──────────────────────────────────────────────────────────────────────┐
+  │  임시 관리자 키 잠금 (TEMPORARY — 나중에 통째로 삭제할 파일)          │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ■ 제거 방법 (2단계, 다른 코드는 손대지 않아도 된다)
+    1. src/layouts/BaseLayout.astro 에서 `ADMIN GATE` 주석으로 감싼 두 줄
+       (import 한 줄 + <AdminGate /> 한 줄) 을 지운다.
+    2. 이 파일(src/components/AdminGate.astro) 을 삭제한다.
+    끝. 스타일·스크립트가 전부 이 파일 안에만 있어 잔여물이 남지 않는다.
+
+  ■ 동작
+    · 기본 상태가 잠김이다. 키를 넣기 전에는 <body> 의 실제 콘텐츠를 전부
+      감추고 이 화면만 띄운다. JS 가 꺼져 있거나 스크립트가 실패한 경우에도
+      잠긴 쪽으로 실패한다.
+    · 키가 맞으면 sessionStorage 에 표시를 남기고 게이트를 DOM 에서 제거한다.
+      (탭을 닫으면 다시 잠긴다)
+    · 키를 3번 틀리면 입력창이 사라지고 404 화면으로 바뀐다. 그 뒤로는
+      새로고침 전까지 어떤 콘텐츠도 열리지 않는다.
+
+  ■ 한계 (반드시 알고 쓸 것)
+    정적 사이트(GitHub Pages)라 검증이 브라우저에서 일어난다. 키는 원문 대신
+    SHA-256 해시로만 넣어 두어 소스에서 눈으로 읽히지는 않지만, 6자리 숫자는
+    마음먹으면 해시 대조로 풀 수 있다. 또 페이지 HTML 자체는 그대로 내려가므로
+    개발자도구·view-source 로는 내용을 볼 수 있다.
+    "일반 방문자가 화면을 열지 못하게" 막는 수준의 임시 방편이지,
+    진짜 인증이 아니다. 비공개가 꼭 필요한 내용은 배포에서 빼는 편이 맞다.
+*/
+
+const { lang = 'ko' } = Astro.props
+
+const copy = {
+  ko: {
+    eyebrow: 'RESTRICTED',
+    title: '관리자 키가 필요합니다.',
+    description: '이 페이지는 준비 중이며 관리자에게만 열려 있습니다.',
+    label: '관리자 키',
+    submit: '확인',
+    error: '관리자 키가 올바르지 않습니다.',
+    remain: '남은 시도',
+    notFoundEyebrow: '404 / NOT FOUND',
+    notFoundTitle: '페이지를 찾을 수 없습니다.',
+  },
+  en: {
+    eyebrow: 'RESTRICTED',
+    title: 'Admin key required.',
+    description: 'This page is in preparation and open to administrators only.',
+    label: 'Admin key',
+    submit: 'Enter',
+    error: 'That admin key is not correct.',
+    remain: 'Attempts left',
+    notFoundEyebrow: '404 / NOT FOUND',
+    notFoundTitle: 'This page could not be found.',
+  },
+}[lang === 'en' ? 'en' : 'ko']
+---
+
+<div class="admin-gate" data-admin-gate data-admin-gate-view="form" role="dialog" aria-modal="true" aria-label={copy.title}>
+  <div class="admin-gate__panel" data-admin-gate-panel="form">
+    <p class="admin-gate__eyebrow">{copy.eyebrow}</p>
+    <h1 class="admin-gate__title">{copy.title}</h1>
+    <p class="admin-gate__desc">{copy.description}</p>
+
+    <form class="admin-gate__form" data-admin-gate-form novalidate>
+      <label class="admin-gate__label" for="admin-gate-key">{copy.label}</label>
+      <input
+        class="admin-gate__input"
+        id="admin-gate-key"
+        data-admin-gate-input
+        type="password"
+        inputmode="numeric"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        aria-describedby="admin-gate-error"
+      />
+      <button class="admin-gate__button" type="submit">{copy.submit}</button>
+    </form>
+
+    <p class="admin-gate__error" id="admin-gate-error" data-admin-gate-error role="alert" aria-live="assertive"></p>
+  </div>
+
+  <div class="admin-gate__panel" data-admin-gate-panel="404" hidden>
+    <p class="admin-gate__eyebrow">{copy.notFoundEyebrow}</p>
+    <h1 class="admin-gate__title">{copy.notFoundTitle}</h1>
+  </div>
+</div>
+
+<style is:global>
+  /*
+    기본값이 "잠김"이다. 스크립트가 키 통과를 확인해 <html data-admin-unlocked>
+    를 붙일 때만 콘텐츠가 열린다. JS 가 꺼져 있거나 스크립트가 실패해도
+    페이지가 열리지 않는 방향으로 실패한다.
+  */
+  html:not([data-admin-unlocked]) body > *:not(.admin-gate):not(script) {
+    display: none !important;
+  }
+
+  html:not([data-admin-unlocked]) {
+    overflow: hidden;
+  }
+
+  html[data-admin-unlocked] .admin-gate {
+    display: none !important;
+  }
+
+  html:not([data-admin-unlocked]) .admin-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: #0b2037;
+    color: #eef3f1;
+    font-family: 'Noto Sans KR', 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  .admin-gate__panel {
+    width: 100%;
+    max-width: 380px;
+    text-align: left;
+  }
+
+  .admin-gate__panel[hidden] {
+    display: none;
+  }
+
+  .admin-gate__eyebrow {
+    margin: 0 0 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #86ddba;
+  }
+
+  .admin-gate__title {
+    margin: 0 0 10px;
+    font-size: 24px;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
+  .admin-gate__desc {
+    margin: 0 0 26px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #99a8a2;
+  }
+
+  .admin-gate__form {
+    display: grid;
+    gap: 10px;
+  }
+
+  .admin-gate__label {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: #c3d0cb;
+  }
+
+  .admin-gate__input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #eef3f1;
+    font: inherit;
+    font-size: 16px;
+    letter-spacing: 0.3em;
+  }
+
+  .admin-gate__input:focus-visible {
+    outline: 2px solid #86ddba;
+    outline-offset: 2px;
+  }
+
+  .admin-gate__button {
+    padding: 13px 16px;
+    border: 0;
+    border-radius: 4px;
+    background: #2f9e7a;
+    color: #04170f;
+    font: inherit;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+
+  .admin-gate__button:hover {
+    background: #86ddba;
+  }
+
+  .admin-gate__error {
+    min-height: 20px;
+    margin: 14px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #ffb4a8;
+  }
+</style>
+
+<script is:inline>
+  /* 이 스크립트는 <body> 최상단에서 즉시 실행된다. 뒤따르는 콘텐츠가 파싱되기
+     전에 잠금 속성을 걸어야 화면이 새는 일이 없다. */
+  ;(function () {
+    // 관리자 키의 SHA-256 해시. 원문 키를 소스에 남기지 않기 위한 것.
+    var KEY_HASH = '6588db00fac72950078154a082ef24a189d582b20d076aa99d7e870117a548fb'
+    // crypto.subtle 을 못 쓰는 환경(LAN 으로 띄운 개발 서버 등) 대비 보조 해시.
+    var KEY_WEAK = 'wf880050c'
+    var STORE_KEY = 'van:admin-unlocked'
+    var MAX_TRIES = 3
+
+    // 3번 틀린 뒤의 차단은 메모리에만 둔다. 새로고침하면 다시 시도할 수 있다.
+    var blocked = false
+
+    function isUnlocked() {
+      try {
+        return window.sessionStorage.getItem(STORE_KEY) === KEY_HASH
+      } catch (error) {
+        return false
+      }
+    }
+
+    function digest(value) {
+      var crypto = window.crypto
+      if (crypto && crypto.subtle && window.isSecureContext) {
+        return crypto.subtle
+          .digest('SHA-256', new TextEncoder().encode(value))
+          .then(function (buffer) {
+            var out = ''
+            var bytes = new Uint8Array(buffer)
+            for (var i = 0; i < bytes.length; i += 1) {
+              out += bytes[i].toString(16).padStart(2, '0')
+            }
+            return out
+          })
+      }
+      return Promise.resolve(null)
+    }
+
+    function weakHash(value) {
+      var source = 'van-gate:' + value
+      var hash = 0x811c9dc5
+      for (var i = 0; i < source.length; i += 1) {
+        hash ^= source.charCodeAt(i)
+        hash = (hash * 0x01000193) >>> 0
+      }
+      return 'w' + hash.toString(16)
+    }
+
+    function matches(value) {
+      return digest(value).then(function (hex) {
+        if (hex) return hex === KEY_HASH
+        return weakHash(value) === KEY_WEAK
+      })
+    }
+
+    function showPanel(gate, name) {
+      var panels = gate.querySelectorAll('[data-admin-gate-panel]')
+      for (var i = 0; i < panels.length; i += 1) {
+        panels[i].hidden = panels[i].getAttribute('data-admin-gate-panel') !== name
+      }
+      gate.setAttribute('data-admin-gate-view', name)
+    }
+
+    function setup() {
+      var root = document.documentElement
+      var gate = document.querySelector('[data-admin-gate]')
+
+      if (isUnlocked()) {
+        root.setAttribute('data-admin-unlocked', '')
+        if (gate) gate.remove()
+        return
+      }
+
+      root.removeAttribute('data-admin-unlocked')
+      if (!gate) return
+
+      if (blocked) {
+        showPanel(gate, '404')
+        return
+      }
+
+      var form = gate.querySelector('[data-admin-gate-form]')
+      var input = gate.querySelector('[data-admin-gate-input]')
+      var error = gate.querySelector('[data-admin-gate-error]')
+      if (!form || !input) return
+
+      if (!gate.getAttribute('data-admin-gate-bound')) {
+        gate.setAttribute('data-admin-gate-bound', '1')
+        var tries = 0
+
+        form.addEventListener('submit', function (event) {
+          event.preventDefault()
+          var value = input.value.trim()
+
+          matches(value).then(function (ok) {
+            if (ok) {
+              try {
+                window.sessionStorage.setItem(STORE_KEY, KEY_HASH)
+              } catch (storageError) {
+                /* 저장이 막힌 브라우저에서는 이동할 때마다 다시 물어본다 */
+              }
+              document.documentElement.setAttribute('data-admin-unlocked', '')
+              gate.remove()
+              return
+            }
+
+            tries += 1
+            input.value = ''
+
+            if (tries >= MAX_TRIES) {
+              blocked = true
+              showPanel(gate, '404')
+              return
+            }
+
+            if (error) error.textContent = gateMessage(tries)
+            input.focus()
+          })
+        })
+      }
+
+      try {
+        input.focus()
+      } catch (focusError) {
+        /* 포커스 실패는 무시 */
+      }
+    }
+
+    function gateMessage(tries) {
+      var isEn = document.documentElement.lang === 'en'
+      var left = MAX_TRIES - tries
+      return isEn
+        ? 'That admin key is not correct. Attempts left: ' + left
+        : '관리자 키가 올바르지 않습니다. 남은 시도 ' + left + '회'
+    }
+
+    setup()
+
+    /* 뷰 트랜지션(ClientRouter) 로 이동해도 잠금이 유지되도록 다시 적용한다. */
+    if (!window.__vanAdminGateBound) {
+      window.__vanAdminGateBound = true
+      document.addEventListener('astro:after-swap', setup)
+      document.addEventListener('astro:page-load', setup)
+    }
+  })()
+</script>
