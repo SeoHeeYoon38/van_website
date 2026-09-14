@@ -1,13 +1,15 @@
 // 반응형 · 쇼케이스 모션 · 레이아웃 v2
 // global.css 에서 분리했습니다. 선언 내용은 그대로이며 순서도 보존합니다.
 
+@use 'config' as *;
+
 /* 10. 반응형 ----------------------------------------------------------- */
 
-@media (max-width: 1420px) {
+@include upto($bp-wide) {
   .section-rail { display: none; }
 }
 
-@media (max-width: 1180px) {
+@include upto($bp-laptop) {
   .desktop-nav { display: none; }
   .language-link { margin-left: auto; }
   .mobile-menu { display: block; margin-left: 10px; }
@@ -29,7 +31,7 @@
   .site-header.is-condensed .mobile-menu[open] > nav { top: var(--header-h-condensed); max-height: calc(100svh - var(--header-h-condensed)); }
 }
 
-@media (max-width: 900px) {
+@include upto($bp-narrow) {
   /* 좁은 화면에서는 가로 이동 리빌이 문서 폭을 넘겨 가로 스크롤을 만든다 → 세로로 통일. */
   .js-ready [data-reveal='left'],
   .js-ready [data-reveal='right'] { translate: 0 26px; }
@@ -65,7 +67,7 @@
   .apply-cta { padding: 48px 32px; }
 }
 
-@media (max-width: 640px) {
+@include upto($bp-mobile) {
   body { font-size: 16.5px; }
   .container, .footer-inner, .footer-bottom { width: min(100% - 34px, 1280px); }
   .header-inner { width: calc(100% - 26px); }
@@ -327,7 +329,7 @@ body::after {
   height: var(--ps, 3px);
   border-radius: 50%;
   background: var(--accent-soft);
-  box-shadow: 0 0 12px 2px color-mix(in srgb, var(--accent-soft) 55%, transparent);
+  box-shadow: 0 0 12px 2px tint(accent-soft, 55);
   opacity: 0;
   animation: van-particle var(--pd, 14s) ease-in-out var(--pl, 0s) infinite;
 }
@@ -346,7 +348,7 @@ body::after {
   position: absolute;
   z-index: 0;
   inset: 0;
-  background: radial-gradient(circle 520px at var(--pointer-x, 50%) var(--pointer-y, 50%), color-mix(in srgb, var(--accent) 10%, transparent), transparent 65%);
+  background: radial-gradient(circle 520px at var(--pointer-x, 50%) var(--pointer-y, 50%), tint(accent, 10), transparent 65%);
   content: '';
   opacity: 0;
   pointer-events: none;
@@ -391,8 +393,8 @@ body::after {
 .donation-card::before,
 .apply-cta::before {
   background:
-    radial-gradient(circle 320px at var(--pointer-x, 50%) var(--pointer-y, 50%), color-mix(in srgb, var(--accent-soft) 18%, transparent), transparent 68%),
-    linear-gradient(var(--sweep-angle), transparent 42%, color-mix(in srgb, var(--accent-soft) 10%, transparent) 50%, transparent 58%);
+    radial-gradient(circle 320px at var(--pointer-x, 50%) var(--pointer-y, 50%), tint(accent-soft, 18), transparent 68%),
+    linear-gradient(var(--sweep-angle), transparent 42%, tint(accent-soft, 10) 50%, transparent 58%);
 }
 
 /* 10-2-11. 네이티브 스크롤 연동 애니메이션 (지원 브라우저 한정) */
@@ -432,7 +434,7 @@ body::after {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 0%, transparent));
+    background: linear-gradient(90deg, var(--accent), tint(accent, 0));
     content: '';
     animation: van-line-draw linear both;
     animation-range: entry 10% cover 40%;
@@ -468,7 +470,7 @@ body::after {
   bottom: 20px;
   left: 11px;
   width: 2px;
-  background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 15%, transparent));
+  background: linear-gradient(180deg, var(--accent), tint(accent, 15));
   content: '';
   scale: 1 0;
   transform-origin: top;
@@ -500,7 +502,7 @@ body::after {
   height: 26px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 5px var(--paper), 0 0 0 6px color-mix(in srgb, var(--accent) 30%, transparent);
+  box-shadow: 0 0 0 5px var(--paper), 0 0 0 6px tint(accent, 30);
   color: var(--paper-strong);
   font-family: var(--display);
   font-size: 11px;
@@ -513,7 +515,7 @@ body::after {
 
 .timeline > li:hover .timeline__node {
   background: var(--accent-deep);
-  box-shadow: 0 0 0 5px var(--paper), 0 0 0 11px color-mix(in srgb, var(--accent) 26%, transparent);
+  box-shadow: 0 0 0 5px var(--paper), 0 0 0 11px tint(accent, 26);
   transform: scale(1.18);
 }
 
@@ -546,7 +548,7 @@ body::after {
   font-size: clamp(15px, 1.5vw, 20px);
   font-weight: 600;
   letter-spacing: .22em;
-  -webkit-text-stroke: 0.6px color-mix(in srgb, var(--accent) 70%, transparent);
+  -webkit-text-stroke: 0.6px tint(accent, 70);
 }
 
 .ticker--display .ticker__group i { width: 9px; height: 9px; }
@@ -569,13 +571,13 @@ body::after {
   font-size: 74px;
   font-weight: 700;
   line-height: 1;
-  -webkit-text-stroke: 1px color-mix(in srgb, var(--accent) 22%, transparent);
+  -webkit-text-stroke: 1px tint(accent, 22);
   pointer-events: none;
   transition: transform 620ms var(--ease-out), -webkit-text-stroke-color 620ms var(--ease-out);
 }
 
 .activity-card:hover .activity-card__body::after {
-  -webkit-text-stroke-color: color-mix(in srgb, var(--accent) 42%, transparent);
+  -webkit-text-stroke-color: tint(accent, 42);
   transform: translateY(-8px);
 }
 
@@ -630,7 +632,7 @@ body::after {
 
 /* 10-4. 레이아웃 v2 반응형 — 기본 규칙보다 뒤에 와야 적용된다 --------------- */
 
-@media (max-width: 640px) {
+@include upto($bp-mobile) {
   .timeline { padding-left: 40px; }
   .timeline__node { left: -40px; width: 24px; height: 24px; font-size: 10px; }
   .timeline p { font-size: 16.5px; line-height: 1.96; }
@@ -654,7 +656,7 @@ body::after {
 }
 
 .domain-card:hover {
-  border-color: color-mix(in srgb, var(--accent-soft) 48%, transparent);
+  border-color: tint(accent-soft, 48);
   background: color-mix(in srgb, #fff 8%, transparent);
   transform: translateY(-5px);
 }
@@ -676,7 +678,7 @@ body::after {
 
 .domain-card li::before { position: absolute; left: 0; color: var(--accent); content: '·'; font-weight: 700; }
 
-@media (max-width: 640px) {
+@include upto($bp-mobile) {
   .domain-grid { grid-template-columns: 1fr; margin-top: 40px; }
   .domain-card { padding: 20px; }
 }
@@ -686,7 +688,7 @@ body::after {
   max-width: 62ch;
   margin: 0 0 26px;
   padding-left: 16px;
-  border-left: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  border-left: 2px solid tint(accent, 55);
   color: var(--on-dark-soft);
   font-size: 15px;
   line-height: 1.86;
@@ -706,7 +708,7 @@ body::after {
 }
 
 .partner-strip li:hover {
-  border-color: color-mix(in srgb, var(--accent-soft) 55%, transparent);
+  border-color: tint(accent-soft, 55);
   color: #fff;
   transform: translateY(-2px);
 }
@@ -729,7 +731,7 @@ body::after {
 }
 
 .dept-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  border-color: tint(accent, 50);
   box-shadow: var(--shadow-md);
   transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-5px);
 }
@@ -748,7 +750,7 @@ body::after {
 .dept-card__fit {
   margin: 0;
   padding-left: 14px;
-  border-left: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-left: 2px solid tint(accent, 45);
   color: var(--text-muted);
   font-size: 14.5px;
   line-height: 1.75;
@@ -764,9 +766,9 @@ body::after {
 .terms-block {
   margin-top: 30px;
   padding: 28px 30px;
-  border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  border: 1px solid tint(accent, 38);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--paper-strong) 70%, transparent);
+  background: tint(paper-strong, 70);
 }
 
 .terms-block h3 { margin: 0 0 14px; color: var(--text-strong); font-family: var(--kr-display); font-size: 17px; font-weight: 700; }
@@ -798,9 +800,9 @@ body::after {
   justify-content: space-between;
   gap: 20px;
   padding: 20px 24px;
-  border: 1px solid color-mix(in srgb, var(--accent) 46%, transparent);
+  border: 1px solid tint(accent, 46);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  background: tint(accent, 8);
   color: var(--text-strong);
   text-decoration: none;
   transition: border-color 420ms var(--ease-out), background-color 420ms var(--ease-out), transform 420ms var(--ease-out);
@@ -808,7 +810,7 @@ body::after {
 
 .posting-card:hover {
   border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  background: tint(accent, 15);
   transform: translateY(-2px);
 }
 
@@ -854,15 +856,15 @@ body::after {
   flex-direction: column;
   gap: 13px;
   padding: 30px 28px;
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border: 1px solid tint(accent, 30);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--paper-strong) 76%, transparent);
+  background: tint(paper-strong, 76);
   transition: border-color 480ms var(--ease-out), transform 480ms var(--ease-out), box-shadow 480ms var(--ease-out);
 }
 
 .way-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 62%, transparent);
-  box-shadow: 0 18px 40px -28px color-mix(in srgb, var(--shade-800) 45%, transparent);
+  border-color: tint(accent, 62);
+  box-shadow: 0 18px 40px -28px tint(shade-800, 45);
 }
 
 .way-card__head { display: flex; align-items: center; gap: 12px; }
@@ -905,9 +907,9 @@ body::after {
 
 .way-card__tiers li {
   padding: 7px 13px;
-  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border: 1px solid tint(accent, 40);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  background: tint(accent, 9);
   color: var(--accent-deep);
   font-family: var(--kr-display);
   font-size: 13px;
@@ -930,7 +932,7 @@ body::after {
 .way-card__note {
   margin: auto 0 0;
   padding-top: 13px;
-  border-top: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  border-top: 1px solid tint(accent, 22);
   color: var(--text-soft);
   font-size: 13px;
   line-height: 1.7;
@@ -943,9 +945,9 @@ body::after {
   gap: 16px;
   margin-top: 26px;
   padding: 28px 30px;
-  border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  border: 1px solid tint(accent, 38);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  background: tint(accent, 7);
 }
 
 .way-contact__head h3 {
@@ -1026,7 +1028,7 @@ body::after {
 .donor-form input, .donor-form select, .donor-form textarea {
   width: 100%;
   padding: 13px 15px;
-  border: 1px solid color-mix(in srgb, var(--text-strong) 20%, transparent);
+  border: 1px solid tint(text-strong, 20);
   border-radius: var(--radius);
   background: var(--paper-strong);
   color: var(--text);
@@ -1039,7 +1041,7 @@ body::after {
 
 .donor-form input:focus, .donor-form select:focus, .donor-form textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+  box-shadow: 0 0 0 3px tint(accent, 18);
   outline: none;
 }
 
@@ -1062,7 +1064,7 @@ body::after {
 }
 
 .donor-form__actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 26px; }
-.donor-form__actions .button-link { color: var(--accent-deep); border-color: color-mix(in srgb, var(--accent) 50%, transparent); cursor: pointer; }
+.donor-form__actions .button-link { color: var(--accent-deep); border-color: tint(accent, 50); cursor: pointer; }
 .donor-form__actions .button-link:hover { color: var(--shade-900); }
 
 .donor-form__hint { margin: 18px 0 0; color: var(--text-muted); font-size: 13.5px; line-height: 1.72; }
@@ -1080,7 +1082,7 @@ body::after {
 /* .button-link 은 어두운 섹션 기준(흰 글씨·흰 테두리)이라 밝은 배경에서 흐려진다.
    후원 창구는 밝은 배경 위에 놓이므로 대비를 다시 잡는다. */
 .way-contact .button-link {
-  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  border-color: tint(accent, 50);
   color: var(--accent-deep);
 }
 
@@ -1093,17 +1095,17 @@ body::after {
   font-size: 13px;
 }
 
-@media (max-width: 1000px) {
+@include upto($bp-tablet) {
   .way-list { grid-template-columns: minmax(0, 1fr); }
   .way-card__note { margin-top: 4px; }
 }
 
-@media (max-width: 900px) {
+@include upto($bp-narrow) {
   .dept-card { grid-template-columns: 44px minmax(0, 1fr); }
   .dept-card__meta { grid-column: 2; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 640px) {
+@include upto($bp-mobile) {
   .dept-card { gap: 16px; padding: 22px; }
   .terms-block { padding: 22px; }
   .way-card { padding: 24px 22px; }
