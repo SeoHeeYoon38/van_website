@@ -1,0 +1,84 @@
+// 모션 프리미티브
+// global.css 에서 분리했습니다. 선언 내용은 그대로이며 순서도 보존합니다.
+
+/* 3. 모션 프리미티브 ------------------------------------------------------ */
+
+/*
+  리빌은 `transform`이 아니라 독립 속성 `translate`/`scale`을 쓴다.
+  → 호버에서 쓰는 `transform: translateY(...)`와 서로 덮어쓰지 않고 합성된다.
+  또한 JS가 준비된 뒤에만 감추므로 스크립트가 실패해도 콘텐츠는 보인다.
+*/
+.js-ready [data-reveal] {
+  opacity: 0;
+  transition:
+    opacity 760ms var(--ease-out),
+    translate 760ms var(--ease-out),
+    scale 760ms var(--ease-out),
+    clip-path 900ms var(--ease-out);
+  transition-delay: calc(var(--reveal-index, 0) * 80ms);
+  will-change: opacity, translate;
+}
+
+.js-ready [data-reveal='up'] { translate: 0 28px; }
+.js-ready [data-reveal='fade'] { translate: none; }
+.js-ready [data-reveal='left'] { translate: -28px 0; }
+.js-ready [data-reveal='right'] { translate: 28px 0; }
+.js-ready [data-reveal='rise'] { translate: 0 44px; scale: 0.985; }
+
+/*
+  clip-path 는 wipe 변주에만 건다.
+  모든 리빌 대상에 clip-path: inset(0) 을 주면 안 된다. inset(0) 은 no-op 이 아니라
+  요소 박스 기준으로 잘라내므로, 박스 밖으로 튀어나온 장식이 전부 사라진다.
+  (타임라인 노드 left:-50px, 섹션 헤더의 거대 고스트 숫자 등이 잘려나갔다.)
+*/
+.js-ready [data-reveal='wipe'] { clip-path: inset(0 0 100% 0); scale: 1.04; }
+.js-ready [data-reveal='wipe'].is-revealed { clip-path: inset(0 0 0 0); }
+
+.js-ready [data-reveal].is-revealed {
+  opacity: 1;
+  scale: none;
+  translate: none;
+  will-change: auto;
+}
+
+@keyframes van-enter {
+  from { opacity: 0; filter: blur(7px); transform: translateY(26px); }
+  to { opacity: 1; filter: blur(0); transform: none; }
+}
+
+@keyframes van-rule-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes van-shimmer {
+  from { background-position: 200% 50%; }
+  to { background-position: -60% 50%; }
+}
+
+@keyframes van-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+@keyframes van-cue {
+  0%, 100% { opacity: .35; transform: scaleY(.35); transform-origin: top; }
+  45% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+}
+
+@keyframes van-hero-zoom {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.12); }
+}
+
+@keyframes van-aurora {
+  0% { opacity: .5; transform: translate3d(-4%, -2%, 0) scale(1); }
+  50% { opacity: .85; transform: translate3d(4%, 3%, 0) scale(1.15); }
+  100% { opacity: .5; transform: translate3d(-4%, -2%, 0) scale(1); }
+}
+
+@keyframes van-pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}

@@ -3,7 +3,7 @@ import { ClientRouter } from 'astro:transitions'
 import SiteFooter from '../components/SiteFooter.astro'
 import SiteHeader from '../components/SiteHeader.astro'
 import { basePath, content, routePath } from '../data/site.js'
-import '../styles/global.css'
+import '../styles/global.scss'
 
 const { lang = 'ko', pageKey = 'home', slug = '', title, description, robots = 'index, follow, max-image-preview:large' } = Astro.props
 const copy = content[lang]

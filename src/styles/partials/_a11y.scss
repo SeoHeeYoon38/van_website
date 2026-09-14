@@ -1,0 +1,55 @@
+// 접근성
+// global.css 에서 분리했습니다. 선언 내용은 그대로이며 순서도 보존합니다.
+
+/* 11. 접근성 ----------------------------------------------------------- */
+
+:where(a, button, input, summary, [tabindex]):focus-visible {
+  border-radius: 3px;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.home-section--ink :focus-visible,
+.conference-spotlight :focus-visible,
+.philosophy-section :focus-visible,
+.contact-section :focus-visible,
+.site-footer :focus-visible,
+.archive-hero :focus-visible,
+.archive-article-hero :focus-visible,
+.archive-next :focus-visible,
+.official-hero :focus-visible { outline-color: var(--accent-soft); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .official-hero__media { animation: none; transform: none; }
+  .official-hero__media::before { animation: none; }
+  .official-hero h1 { animation: van-enter .01ms both; }
+  .js-ready [data-reveal] { clip-path: none; opacity: 1; scale: none; translate: none; }
+
+  /* 쇼케이스 모션 일괄 정지 */
+  .ticker__track { animation: none; }
+  .hero-particles, .nav-indicator, .official-hero__aurora, .page-hero__aurora { display: none; }
+  .ornament i { scale: 1 1; }
+  [data-magnetic] { translate: none; }
+
+  .split-word > span,
+  .official-hero h1 .split-word > span,
+  .page-hero h1 .split-word > span,
+  .archive-hero h1 .split-word > span {
+    animation: none;
+    opacity: 1;
+    rotate: none;
+    translate: none;
+  }
+
+  .donation-card:hover, .apply-cta:hover { animation: none; }
+  .timeline::before { scale: 1 1; }
+}

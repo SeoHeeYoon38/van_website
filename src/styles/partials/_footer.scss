@@ -1,0 +1,42 @@
+// 푸터 · 유틸리티
+// global.css 에서 분리했습니다. 선언 내용은 그대로이며 순서도 보존합니다.
+
+/* 9. 푸터 · 유틸리티 ---------------------------------------------------- */
+
+.site-footer { padding: 66px 0 28px; color: var(--on-dark-soft); background: var(--shade-950); }
+.footer-inner, .footer-bottom { width: min(1280px, calc(100% - 64px)); margin-inline: auto; }
+.footer-inner { display: flex; justify-content: space-between; gap: 52px; padding-bottom: 46px; }
+.footer-brand img { width: 150px; height: auto; }
+.footer-brand p { max-width: 46ch; margin: 20px 0 0; color: var(--on-dark-muted); font-size: 15px; line-height: 1.8; }
+
+.site-footer nav { display: flex; flex-wrap: wrap; align-content: flex-start; justify-content: flex-end; gap: 12px 26px; }
+
+.site-footer nav a {
+  position: relative;
+  color: var(--on-dark-soft);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 300ms var(--ease-out);
+}
+
+.site-footer nav a::after {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--accent-soft);
+  content: '';
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 340ms var(--ease-out);
+}
+
+.site-footer nav a:hover { color: #fff; }
+.site-footer nav a:hover::after { transform: scaleX(1); }
+
+.footer-bottom { display: flex; justify-content: space-between; gap: 20px; padding-top: 26px; border-top: 1px solid rgba(255, 255, 255, .12); color: var(--on-dark-muted); font-family: var(--display); font-size: 12.5px; letter-spacing: .08em; }
+
+.page-hero.error-page { display: grid; min-height: 72vh; padding: 140px 0; color: #fff; background: radial-gradient(circle at 50% 20%, var(--shade-600), var(--shade-800) 50%, var(--shade-900)); place-items: center; }
+.error-page h1 { margin: 0 0 32px; font-family: var(--kr-display); font-size: clamp(25px, 2.8vw, 38px); font-weight: 600; letter-spacing: -0.012em; }

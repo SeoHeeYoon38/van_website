@@ -1,0 +1,65 @@
+// 기초 타이포그래피 · 리셋
+// global.css 에서 분리했습니다. 선언 내용은 그대로이며 순서도 보존합니다.
+
+/* 2. 기초 타이포그래피 / 리셋 -------------------------------------------- */
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--shade-900);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--text);
+  background: var(--paper);
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.78;
+  letter-spacing: 0.005em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+body.has-menu-open { overflow: hidden; }
+
+body, button, input { font-family: var(--sans); }
+
+img { display: block; max-width: 100%; }
+
+a { color: inherit; }
+
+button, input { font: inherit; }
+
+h1, h2, h3 { text-wrap: balance; }
+
+p { text-wrap: pretty; }
+
+::selection { color: #fff; background: var(--shade-700); }
+
+.container {
+  width: min(1280px, calc(100% - 64px));
+  margin-inline: auto;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: 8px;
+  left: 8px;
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  color: #fff;
+  background: var(--shade-800);
+  font-size: 14px;
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform 200ms var(--ease-out);
+}
+
+.skip-link:focus-visible { transform: none; }
